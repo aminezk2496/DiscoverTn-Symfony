@@ -1,0 +1,224 @@
+{% extends 'base-front1.html.twig' %}
+
+{% block title %}checkout {% endblock %}
+
+
+{% block Museum %}
+
+    <style>
+
+        body {
+            font-size: 20px;
+            font-family: system-ui, Helvetica, Arial, sans-serif;
+        }
+
+        form {
+            width: 40vw;
+            margin: 20px auto;
+        }
+
+        .testt2 {
+            position: relative;
+            border: none;
+        }
+
+        label {
+            top: 18px;
+            color: rgba(0, 0, 0, 0.3);
+            transform-origin: left;
+            transition: all 0.3s ease;
+        }
+
+        input:focus ~ label {
+            color: red;
+        }
+
+        input:focus ~ label,
+        input:valid ~ label {
+            top: 0;
+            transform: scale(0.6, 0.6);
+        }
+
+        input {
+            font-size: 20px;
+            width: 100%;
+            border: none;
+            margin-top: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .after {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, red 50%, transparent 50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            transition: all 0.6s ease;
+        }
+
+        input:focus ~ .after {
+            background-position: 0 0;
+        }
+
+        button {
+            position: relative;
+            width: 100%;
+            font-size: 20px;
+            font-family: system-ui, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            margin-top: 20px;
+            padding: 2px 10px;
+            color: rgba(0, 0, 0, 0.4);
+            background: white;
+            border: none;
+            background: linear-gradient(to right, red 50%, transparent 50%);
+            background-color: rgba(0, 0, 0, 0.3);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            transition: all 0.6s ease;
+        }
+
+        button:before {
+            position: absolute;
+            content: "Submit";
+            top: 2px;
+            bottom: 2px;
+            left: 2px;
+            right: 2px;
+            display: block;
+            background-color: white;
+        }
+
+        button:active,
+        button:focus,
+        button:hover {
+            outline: none;
+            background-position: 0 0;
+            color: red;
+        }
+    </style>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>var stripe = Stripe('pk_test_51IZIMOALxTyarhINNwG4N93R74wClzUQIhYxZxud8XyTIEoxHVrVRg5gE8JbrFy19CBJuCHABqB71q40mv9RYG0z00xPVWnk26');
+        var elements = stripe.elements();</script>
+
+
+
+
+    <form action=""  method="POST" id="payment-form">
+        <input type="hidden" name="_subject" value="New submission from x">
+
+
+
+
+        <div class="testt2">
+        <label>
+            Reservation Number:
+            <input  type="email"  name="Sender Email" id="email2" value="{{ reservation.getIdReservation()  }}"readonly>
+        </label>
+        </div>
+        <div class="testt2">
+        <label>
+            Museum reserved:
+            <textarea name="message"  id="message2"readonly>Museum:  BOOKED BY:  {{ reservation.idUs.getNomUtilisateur()  }}</textarea>
+        </label>
+        </div>
+
+        <div class="form-row">
+            <label for="card-element">
+                Credit or debit card
+            </label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+
+
+            <!-- Used to display Element errors. -->
+            <div id="card-errors" role="alert"></div>
+        </div>
+
+        <button  onsubmit="myFunction();">Submit Payment</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+    <script>
+        function myFunction() {
+
+
+            //document.getElementById("form4").submit();
+
+            //window.location.href = "http://www.w3schools.com";
+
+           /* setTimeout(function() {
+                document.getElementById("form4").submit();
+            }, 10);*/
+
+        }
+    </script>
+
+
+
+    <script>
+        // Custom styling can be passed to options when creating an Element.
+        let style = {
+            base: {
+                // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        };
+
+        // Create an instance of the card Element.
+        let card = elements.create('card', {style: style});
+
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+
+        // Create a token or display an error when the form is submitted.
+        let form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Inform the customer that there was an error.
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send the token to your server.
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+
+        function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            let form = document.getElementById('payment-form');
+            let hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Submit the form
+            form.submit();
+        }
+
+
+
+
+    </script>
+
+
+{% endblock %}

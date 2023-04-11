@@ -1,0 +1,48 @@
+{% extends 'base-front.html.twig' %}
+{% block body %}
+    <div class="main">
+
+        <div class="shop_top">
+            <div class="container">
+                {% for flash in app.flashes("success") %}
+                    <div class="alert alert-danger">
+                        {{ flash }}
+                    </div>
+                {% endfor %}
+{#                {% if fMessage is defined %}#}
+{#                    <p>{{ fMessage }}</p>#}
+{#                {% endif %}#}
+
+                <button class="btn btn-outline-primary" style="margin-bottom: 40px"><a href="{{ path('evenements_reservees_client') }}">Consulter Vos Evenements Reservees</a></button>
+                <button class="btn btn-outline-primary" style="margin-bottom: 40px"><a href="{{ path('create_event_front') }}">Creer Votre Propre Evenement</a></button>
+                <div class="row shop_box-top">
+                    {% if eventsF is defined %}
+                        {% for evenement in eventsF %}
+                            <div class="col-md-3 shop_box"><a href="single.html">
+                                    <img src="{{"http:\\\\localhost\\"~evenement.imageEvenement | slice(16) }}" class="img-responsive" alt="">
+                                    {#                            <img src="{{/images/evenements/evenement.imageEvenement }}" alt="">#}
+                                    <span class="new-box">
+						<span class="new-label">New</span>
+                                </a><div class="shop_desc"><a href="single.html">
+                                    </a><h3><a href="single.html"></a><a href="#">{{ evenement.titreEvenement }}</a></h3>
+                                    <p>{{ evenement.descriptionEvenement}} </p>
+                                    <span class="actual">{{ evenement.lieuEvenement }}</span>
+                                    <span class="actual">{{ evenement.dateEvenement | date('d-m-Y') }}</span><br>
+                                    <ul class="buttons">
+                                        <li class="cart"><a href="{{ path('add_reservation_evenement',{'id':evenement.idEvenement}) }}">Reserver</a></li>
+                                        <div class="clear"></div>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(eventsF) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

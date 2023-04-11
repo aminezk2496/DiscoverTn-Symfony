@@ -1,0 +1,115 @@
+{% extends 'base-front.html.twig' %}
+{% block title %}{{ article.titreArticle}} {% endblock %}
+{% block body %}
+    <div class="single-post-section">
+        <div class="single-post-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 primary right-sidebar">
+                        <!-- single blog post html start -->
+                        <figure class="feature-image">
+                            <img src="{{"http:\\\\localhost\\"~article.imageArticle| slice(16) }}"  alt="">
+
+
+                        </figure>
+                        <article class="single-content-wrap">
+                            <h3>{{ article.titreArticle}}</h3>
+                            <p>{{ article.descriptionArticle | nl2br }}</p>
+
+                        </article>
+                        <div class="meta-wrap">
+                            <div class="tag-links">
+                                <i class="fa-solid fa-tags"></i>
+                                <a href="#">{{ article.categorie.nomCategorie }}</a>
+                            </div>
+                        </div>
+
+                        <!-- post comment html -->
+                        <div class="comment-area">
+                            <h2 class="comment-title">Comments</h2>
+                            <div class="comment-area-inner">
+                                {% for commentaire in article.commentaires %}
+
+                                <ol>
+                                    <li>
+                                        <figure class="comment-thumb">
+                                            <img src="{{ asset('front/images/img20.jpg') }}" alt="" style="">
+                                        </figure>
+                                        <div class="comment-content">
+                                            <div class="comment-header">
+                                                <h5 class="author-name">{{ commentaire.utilisateur.prenomUtilisateur }} {{ commentaire.utilisateur.nomUtilisateur }}</h5>
+                                                <span class="post-on">{{ commentaire.dateCommentaire|date("m-d-Y H:i","Europe/Paris")  }}</span>
+                                            </div>
+                                            <p>{{ commentaire.contenuCommentaire }}</p>
+                                        </div>
+                                    </li>
+                                </ol>
+                                {% endfor %}
+                            </div>
+
+                            <div class="comment-form-wrap">
+                                <h2 class="comment-title">Ajouter un Commentaire</h2>
+
+                                {{ form_start(formC, {attr: {'novalidate': 'novalidate'}}) }}
+
+                                <div class="row">
+                                    <div class="col-md-12"> {{ form_row(formC.contenuCommentaire) }}</div>
+                                </div>
+
+                                <button class="btn btn-primary mt-2">{{ button | default("Enregistrer") }}</button>
+                                {{ form_end(formC) }}
+                            </div>
+                            <!-- post navigation html -->
+                            <div class="post-navigation">
+                                <div class="nav-prev">
+                                    <a href="#">
+                                        <span class="nav-label">Previous Reading</span>
+                                        <span class="nav-title">Deleniti illum culpa sodales cubilia.</span>
+                                    </a>
+                                </div>
+                                <div class="nav-next">
+                                    <a href="#">
+                                        <span class="nav-label">Next Reading</span>
+                                        <span class="nav-title">Deleniti illum culpa sodales cubilia.</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- blog post item html end -->
+                    </div>
+                    <div class="col-lg-4 secondary"style="margin-top: 20px;">
+                        <div class="sidebar">
+                            <div class="text-center my-3" style="margin-top: 20px; margin-bottom: 20px;">
+                              <a href="{{ path('article.like',{id:article.idArticle}) }}">  <i class="fa-solid fa-thumbs-up"></i></a>({{ nbreLike }})
+                                <a href="{{ path('article.dislike',{id:article.idArticle}) }}"> <i class="fa-solid fa-thumbs-down"></i></a>({{ nbreDislike }})
+                            </div>
+                            <aside class="widget author_widget">
+                                <h3 class="widget-title">ABOUT AUTHOR</h3>
+                                <div class="widget-content text-center">
+                                    <div class="profile">
+                                        <figure class="avatar">
+                                            <a href="#">
+                                                <img src="{{"http:\\\\localhost\\"~img| slice(16) }}" alt="image utilisateur" style="">
+                                            </a>
+                                        </figure>
+                                        <div class="text-content">
+                                            <div class="name-title">
+                                                <h3>
+                                                    <p href="#">{{ article.utilisateur.prenomUtilisateur }} {{ article.utilisateur.nomUtilisateur }}</p>
+
+                                                </h3>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </aside>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,40 @@
+{% extends "baseFront.html.twig" %}
+
+{% block body %}
+
+            <div class="gap">
+                <div class="container">
+                    <div class="row">
+    <h1>Reservation</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+                
+                <td rowspan="7" style="width:50%"><img src ="{{asset('upload/') ~ museum.imageMuseum  }}" ></td>
+            </tr>
+            <tr>
+                <th>id</th>
+                <td>{{ museum.idMuseum }}</td>
+            </tr>
+            <tr>
+                <th>state</th>
+                <td>{{ museum.paysMuseum }}</td>
+            </tr>
+            <tr>
+                <th>rating</th>
+                <td>{{ museum.rating }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ museum.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ museum.createdAt ? museum.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('museumfront_index') }}">back to list</a>

@@ -1,0 +1,25 @@
+{% extends 'base-front.html.twig' %}
+
+
+{% block Camping %}
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">// <![CDATA[
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+        // ]]></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+
+    {%  for camping in campings %}
+<div class="col-md-3 team1">
+    <a class="popup-with-zoom-anim" href="#small-dialog3"><img src="{{ "http:\\\\localhost\\" ~ camping.imageCamping| slice(16) }}" class="img-responsive" title="continue" style="height: 100px ; width: 100px" class="img-responsive" title="continue" alt=""/></a>
+    <div id="small-dialog3" class="mfp-hide">
+        <div class="pop_up2">
+            <p>{{ camping.nomCamping }}</p>
+            <p>{{ camping.adresseCamping }}</p>
+            <button type="button" class="btn btn-danger"><a style="color: #fff" href="{{ path('add_reservation_camping',{'idCamping':camping.idCamping }) }}">Reserver</a></button>
+        </div>
+    </div>
+</div>
+    {%  endfor %}
+{% endblock %}
