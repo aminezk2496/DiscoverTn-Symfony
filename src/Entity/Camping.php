@@ -2,60 +2,74 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\CampingRepository;
-use Datetime;
 
-#[ORM\Entity(repositoryClass: CampingRepository::class)]
-
+/**
+ * Camping
+ *
+ * @ORM\Table(name="camping")
+ * @ORM\Entity
+ */
 class Camping
 {
-   
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idCamping = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Camping", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCamping;
 
-   
-    #[ORM\Column(length:1000)]
-    private ?string $nom = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=1000, nullable=false)
+     */
+    private $nom;
 
-   
-    #[ORM\Column]
-    private ?\DateTime $dateDebut = null;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_Debut", type="date", nullable=false)
+     */
+    private $dateDebut;
 
-  
-    #[ORM\Column]
-    private ?\DateTime $dateFin = null;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_Fin", type="date", nullable=false)
+     */
+    private $dateFin;
 
-   
-    #[ORM\Column]
-    private ?int $periode = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Periode", type="integer", nullable=false)
+     */
+    private $periode;
 
-    
-    #[ORM\Column]
-    private ?float $prix = null;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Prix", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prix;
 
-   
-    #[ORM\Column(length:100)]
-    private ?string $lieux = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Lieux", type="string", length=100, nullable=false)
+     */
+    private $lieux;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
-    
-    #[ORM\Column(length:255)]
-    private $imagec = 'NULL';
-
-   
-    #[ORM\Column]
-    private ?int $nbr_place = null;
-
-    
-    #[ORM\Column]
-    private $image = 'NULL';
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Description", type="text", length=0, nullable=false)
+     */
+    private $description;
 
     public function getIdCamping(): ?int
     {
@@ -74,24 +88,24 @@ class Camping
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTime
+    public function getDateDebut(): ?\DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTime $dateDebut): self
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTime
+    public function getDateFin(): ?\DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTime $dateFin): self
+    public function setDateFin(\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -145,77 +159,6 @@ class Camping
 
         return $this;
     }
-
-    public function getImagec(): ?string
-    {
-        return $this->imagec;
-    }
-
-    public function setImagec(?string $imagec): self
-    {
-        $this->imagec = $imagec;
-
-        return $this;
-    }
-
-    public function getNbrPlace(): ?int
-    {
-        return $this->nbr_place;
-    }
-
-    public function setNbrPlace(int $nbr_place): self
-    {
-        $this->nbr_place  = $nbr_place ;
-
-        return $this;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage($image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-    
-/**
- * @ORM\ManyToMany(targetEntity="App\Entity\Participation", mappedBy="campings")
- */
-private $participations;
-
-public function __construct()
-{
-    $this->participations = new ArrayCollection();
-}
-
-public function getParticipations(): Collection
-{
-    return $this->participations;
-}
-
-public function addParticipation(Participation $participation): self
-{
-    if (!$this->participations->contains($participation)) {
-        $this->participations[] = $participation;
-        $participation->addCamping($this);
-    }
-
-    return $this;
-}
-
-public function removeParticipation(Participation $participation): self
-{
-    if ($this->participations->contains($participation)) {
-        $this->participations->removeElement($participation);
-        $participation->removeCamping($this);
-    }
-
-    return $this;
-}
 
 
 }

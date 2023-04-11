@@ -2,79 +2,85 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ParticipationRepository;
 
-#[ORM\Entity(repositoryClass: ParticipationRepository::class)]
+/**
+ * Participation
+ *
+ * @ORM\Table(name="participation")
+ * @ORM\Entity
+ */
 class Participation
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idParti=null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Parti", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idParti;
 
-    #[ORM\Column(length:50)]
-    private ?string $refp;
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="id_Camp", type="integer", nullable=true)
+     */
+    private $idCamp;
 
-    #[ORM\Column]
-    private ?int $idClient = NULL;
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="id_Rand", type="integer", nullable=true)
+     */
+    private $idRand;
 
-    #[ORM\Column]
-    private ?int $idCamp = NULL;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Nombre", type="integer", nullable=false)
+     */
+    private $nombre;
 
-    #[ORM\Column]
-    private ?int $idRand = NULL;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Montant", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $montant;
 
-    #[ORM\Column]
-    private ?int $idEvents = NULL;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Etat", type="string", length=10, nullable=false)
+     */
+    private $etat;
 
-    #[ORM\Column]
-    private ?int $nombre;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_Parti", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $dateParti = 'CURRENT_TIMESTAMP';
 
-    #[ORM\Column]
-    private ?float $montant;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_evenement", type="integer", nullable=false)
+     */
+    private $idEvenement;
 
-    #[ORM\Column(length:10)]
-    private ?string $etat;
-
-    #[ORM\Column]
-    private ?\DateTime $dateParti;
-
-    #[ORM\Column(length:100)]
-    private ?string $nom;
-
-    
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="id_utilisateur", type="integer", nullable=true)
+     */
+    private $idUtilisateur;
 
     public function getIdParti(): ?int
     {
         return $this->idParti;
-    }
-
-    public function getRefp(): ?string
-    {
-        return $this->refp;
-    }
-
-    public function setRefp(string $refp): self
-    {
-        $this->refp = $refp;
-
-        return $this;
-    }
-
-    public function getIdClient(): ?int
-    {
-        return $this->idClient;
-    }
-
-    public function setIdClient(?int $idClient): self
-    {
-        $this->idClient = $idClient;
-
-        return $this;
     }
 
     public function getIdCamp(): ?int
@@ -97,18 +103,6 @@ class Participation
     public function setIdRand(?int $idRand): self
     {
         $this->idRand = $idRand;
-
-        return $this;
-    }
-
-    public function getIdEvents(): ?int
-    {
-        return $this->idEvents;
-    }
-
-    public function setIdEvents(?int $idEvents): self
-    {
-        $this->idEvents = $idEvents;
 
         return $this;
     }
@@ -161,67 +155,29 @@ class Participation
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getIdEvenement(): ?int
     {
-        return $this->nom;
+        return $this->idEvenement;
     }
 
-    public function setNom(string $nom): self
+    public function setIdEvenement(int $idEvenement): self
     {
-        $this->nom = $nom;
+        $this->idEvenement = $idEvenement;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Camping>
-     */
-    public function getCamping(): Collection
+    public function getIdUtilisateur(): ?int
     {
-        return $this->camping;
+        return $this->idUtilisateur;
     }
 
-    public function addCamping(Camping $camping): self
+    public function setIdUtilisateur(?int $idUtilisateur): self
     {
-        if (!$this->camping->contains($camping)) {
-            $this->camping->add($camping);
-        }
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
-
-    public function removeCamping(Camping $camping): self
-    {
-        $this->camping->removeElement($camping);
-
-        return $this;
-    }
-
- 
-/**
- * @ORM\ManyToMany(targetEntity="App\Entity\Camping", inversedBy="participations")
- * @ORM\JoinTable(name="participation_camping",
- *   joinColumns={
- *     @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
- *   },
- *   inverseJoinColumns={
- *     @ORM\JoinColumn(name="camping_id", referencedColumnName="id")
- *   }
- * )
- */
-private $campings;
-
-public function __construct()
-{
-    $this->campings = new ArrayCollection();
-}
-
-public function getCampings(): Collection
-{
-    return $this->campings;
-}
-
-
 
 
 }

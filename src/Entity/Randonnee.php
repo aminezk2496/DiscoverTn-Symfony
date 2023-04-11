@@ -4,39 +4,65 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\RandonneeRepository;
 
-#[ORM\Entity(repositoryClass: RandonneeRepository::class)]
+/**
+ * Randonnee
+ *
+ * @ORM\Table(name="randonnee")
+ * @ORM\Entity
+ */
 class Randonnee
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idRandonnee;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Randonnee", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idRandonnee;
 
-    #[ORM\Column(length:1000)]
-    private ?string $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=1000, nullable=false)
+     */
+    private $nom;
 
-    #[ORM\Column]
-    private ?\DateTime $dateRand;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_Rand", type="date", nullable=false)
+     */
+    private $dateRand;
 
-    #[ORM\Column(length:1000)]
-    private ?string $lieux;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Lieux", type="string", length=1000, nullable=false)
+     */
+    private $lieux;
 
-    #[ORM\Column]
-    private ?float $prix;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Prix", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prix;
 
-    #[ORM\Column(length:50)]
-    private ?string $niveauDiff;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Niveau_diff", type="string", length=50, nullable=false)
+     */
+    private $niveauDiff;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string$programme;
-
-    #[ORM\Column(length:255)]
-    private ?string $imagesr;
-
-    #[ORM\Column]
-    private ?int $nbrPlacer;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Programme", type="text", length=0, nullable=false)
+     */
+    private $programme;
 
     public function getIdRandonnee(): ?int
     {
@@ -111,30 +137,6 @@ class Randonnee
     public function setProgramme(string $programme): self
     {
         $this->programme = $programme;
-
-        return $this;
-    }
-
-    public function getImagesr(): ?string
-    {
-        return $this->imagesr;
-    }
-
-    public function setImagesr(string $imagesr): self
-    {
-        $this->imagesr = $imagesr;
-
-        return $this;
-    }
-
-    public function getNbrPlacer(): ?int
-    {
-        return $this->nbrPlacer;
-    }
-
-    public function setNbrPlacer(int $nbrPlacer): self
-    {
-        $this->nbrPlacer = $nbrPlacer;
 
         return $this;
     }

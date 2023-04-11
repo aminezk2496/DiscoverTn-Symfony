@@ -1,0 +1,61 @@
+{% extends 'base-admin.html.twig' %}
+
+
+{% block body %}
+<main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					    <h1>Evenement </h1>
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdEvent</th>
+                <th>TitreEvent</th>
+                <th>DateDebutEvent</th>
+                <th>DateFinEvent</th>
+                <th>PrixEvent</th>
+                <th>LieuEvent</th>
+                <th>DescEvent</th>
+                <th>ImageEvent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.idEvent }}</td>
+                <td>{{ evenement.titreEvent }}</td>
+                <td>{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.prixEvent }}</td>
+                <td>{{ evenement.lieuEvent }}</td>
+                <td>{{ evenement.descEvent }}</td>
+                <td>{{ evenement.imageEvent }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_evenement_admin_show', {'idEvent': evenement.idEvent}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('app_evenement_admin_edit', {'idEvent': evenement.idEvent}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('app_evenement_admin_new') }}">Create new</a>
+
+    </div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+{% endblock %}
