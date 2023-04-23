@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,7 @@
         <link rel="stylesheet" href="{{ asset('front/css/fwslider.css') }}" media="all">
         <script src="{{ asset('front/js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('front/js/fwslider.js') }}"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         <!--end slider -->
         <script type="text/javascript">
             $(document).ready(function() {
@@ -67,6 +69,32 @@
                             <ul class="nav" id="nav">
 
 
+                        <div class="menu">
+                            <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+                            <ul class="nav" id="nav">
+                                <li><a href="{{ path('app_participation_index') }}">Accueil</a></li>
+                               <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sortie</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('app_participation_liste')}}">Camping</a></li>
+                                        <li><a href="{{ path('app_participation_r_liste')}}">Randonnee</a></li>
+                                    </ul>
+                               </li>
+                               <li><a href="{{ path('app_favorite_index') }}">Favorite</a></li>
+
+
+
+                                <div class="clear"></div>
+                            </ul>
+                            <script type="text/javascript" src="js/responsive-nav.js"></script>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="header_right">
+                        <!-- start search-->
+                        <ul class="nav" >
+
+                        </ul>
 
 
                                 <div class="clear"></div>
@@ -172,5 +200,8 @@
         </div>
     </div>
 {% endblock %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

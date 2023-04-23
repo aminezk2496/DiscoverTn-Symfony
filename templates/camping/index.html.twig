@@ -90,7 +90,6 @@ a.show:hover, a.edit:hover {
                 <th>Prix</th>
                 <th>Lieux</th>
                 <th>Description</th>
-                <th>Imagec</th>
                 <th>Nbr_place</th>
                 <th>actions</th>
             </tr>
@@ -105,7 +104,6 @@ a.show:hover, a.edit:hover {
                 <td>{{ camping.prix }}</td>
                 <td>{{ camping.lieux }}</td>
                 <td>{{ camping.description }}</td>
-                <td>{{ camping.imagec }}</td>
                 <td>{{ camping.nbrPlace }}</td>
                 <td>
                     <a href="{{ path('app_camping_show', {'idCamping': camping.idCamping}) }}">show</a>

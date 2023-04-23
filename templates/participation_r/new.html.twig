@@ -1,36 +1,37 @@
 {% extends 'base-front.html.twig' %}
 
-{% block title %}New Participation{% endblock %}
+
 {% block body %}
-<main id="main" class="main">
+
+   <main id="main" class="main">
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Liste des campings</h1>
+					<h1>Liste des randonnee</h1>
 					<div class="col-12">
 						<div class="card">
 							<div class="card-body">
 
     <hr>
     <div class="row">
-        {% for camping in campings %}
+        {% for randonnee in randonnees %}
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <img class="card-img-top" src="{{ camping.imagec }}" alt="{{ camping.nom }}">
+                    <img class="card-img-top" src="{{ randonnee.imagesr }}" alt="{{ randonnee.nom }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ camping.nom }}</h5>
-                        <h5>{{camping.dateDebut ? camping.dateDebut|date('Y-m-d') : ''}}</h5>
-                        <h5>{{camping.dateFin ? camping.dateFin|date('Y-m-d') : '' }}</h5>
-                        <h5>{{ camping.periode }}</h5>
-                        <h5>{{ camping.prix }}</h5>
-                        <h5>{{ camping.lieux }}</h5>
-                        <p class="card-text">{{ camping.description }}</p>
+                        <h5 class="card-title">{{ randonnee.nom }}</h5>
+                        <h5>{{ randonnee.dateRand ? randonnee.dateRand|date('Y-m-d') : '' }}</h5>
+                        <h5>{{ randonnee.lieux }}</h5>
+                        <h5>{{ randonnee.prix }}</h5>
+                        <h5>{{ randonnee.niveauDiff }}</h5>
+                        <h5>{{ randonnee.nbrPlacer }}</h5>
+                        <p class="card-text">{{ randonnee.programme }}</p>
                         {% if averageRating > 0 %}
                          <p>Average rating: {{ averageRating }}.</p>
                          {% else %}
                         <p>N'est pas encore été noté.</p> 
                         
-                        <form method="post" action="{{ path('app_Rating_rate', {'id': camping.idCamping}) }}">
+                        <form method="post" action="{{ path('app_Rating_ratera', {'id': randonnee.idRandonnee}) }}">
                         
                                     {{ form_start(form) }}
                     <div class="form-group">
@@ -41,14 +42,15 @@
 
                     </form>
                         {% endif %}
-                        <a href="{{ path('app_Rating_rate', {'id': camping.idCamping}) }}" class="btn btn-primary">Rate this camping</a>
-                        <a href="{{ path('app_participation_new', {'id': camping.idCamping}) }}" class="btn btn-primary">Participer</a>
+                        <a href="{{ path('app_Rating_ratera', {'id': randonnee.idRandonnee}) }}" class="btn btn-primary">Rate this Randonnee</a>
+                        <a href="{{ path('app_participation_new', {'id': randonnee.idRandonnee}) }}" class="btn btn-primary">Participer</a>
                         
-            
-            <form action="{{ path('favorite_camping', {'id': camping.idCamping}) }}" method="POST">
-                <input type="hidden" name="_token" value="{{ csrf_token('favorite_camping' ~ camping.idCamping) }}">
+                        <form action="{{ path('favorite_randonnee', {'id': randonnee.idRandonnee}) }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token('favorite_randonnee' ~ randonnee.idRandonnee) }}">
                 <button type="submit">Add to favorites</button>
             </form>
+            
+            
                     </div>
                 </div>
             </div>

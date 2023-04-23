@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Resume</title>
+</head>
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+        <table width="100%" border="1">
+            
+            <tr>
+                <th>Nom</th>
+                <td>{{ camping.nom }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ camping.dateDebut ? camping.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ camping.dateFin ? camping.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Periode</th>
+                <td>{{ camping.periode }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ camping.prix }}</td>
+            </tr>
+            <tr>
+                <th>Lieux</th>
+                <td>{{ camping.lieux }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ camping.description }}</td>
+            </tr>
+            <tr>
+                <th>Imagec</th>
+                <td><img class="card-img-top" src="{{ camping.imagec }}" ></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

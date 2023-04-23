@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Camping;
+use App\Entity\Favorite;
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\User\User;
+use Symfony\Component\Form\FormError;
+use App\Repository\FavoriteRepository;
 
 #[Route('/camping')]
 class CampingController extends AbstractController
@@ -33,15 +37,22 @@ class CampingController extends AbstractController
         $endDate = $form->get('dateFin')->getData();
         
         if ($endDate < $startDate) {
-            $this->addFlash('error', 'La date de fin ne peut pas être avant la date de début.');
-            return $this->redirectToRoute('app_camping_new');
-        }
+            $this->addFlash('error', 'La date de fin doit être supérieure ou égale à la date de début.');
+            $form->addError(new FormError('La date de fin doit être supérieure ou égale à la date de début.'));
+    
+            // Retourner le formulaire non validé
+            return $this->render('camping/new.html.twig', [
+                'form' => $form->createView(),
+            ]);
+}
 
             $file = $form->get('imagec')->getData();
-        $fileName = uniqid().'.'.$file->guessExtension();
+            $fileName = $file->getClientOriginalName();
+            $path = '/Camp/' . $fileName;
         $file->move($this->getParameter('images_directory'), $fileName);
+        //$file->move($this->getParameter('uploads_directory'), $fileName);
 
-        $camping->setImagec($fileName);
+        $camping->setImagec($path);
             $campingRepository->save($camping, true);
 
             return $this->redirectToRoute('app_camping_index', [], Response::HTTP_SEE_OTHER);
@@ -68,6 +79,13 @@ class CampingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('imagec')->getData();
+            $fileName = $file->getClientOriginalName();
+            $path = '/Camp/' . $fileName;
+        $file->move($this->getParameter('images_directory'), $fileName);
+        //$file->move($this->getParameter('uploads_directory'), $fileName);
+
+        $camping->setImagec($path);
             $campingRepository->save($camping, true);
 
             return $this->redirectToRoute('app_camping_index', [], Response::HTTP_SEE_OTHER);
@@ -88,4 +106,30 @@ class CampingController extends AbstractController
 
         return $this->redirectToRoute('app_camping_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    
+    public function favorite(Request $request, Camping $camping ,FavoriteRepository $favoritesRepository)
+    {
+
+    $userId = 12;
+
+    // Check if the user has already favorited this article
+    $existingFavorite = $favoritesRepository->findOneBy(['user' => $userId, 'camping' => $camping]);
+    $date = new \DateTime();
+    if (!$existingFavorite) {
+        // Create a new favorites entity for the user and article
+        $favorites = new Favorite();
+        $favorites->setUser($userId);
+        $favorites->setCamping($camping);
+        $favorites->setCreatedAt($date);
+        $favoritesRepository->save($favorites, true);
+        
+     }   
+
+        // Redirect back to the article page
+        return $this->redirectToRoute('app_participation_liste');
+    
+}
+
 }

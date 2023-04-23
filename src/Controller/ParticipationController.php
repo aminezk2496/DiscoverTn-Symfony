@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Camping;
+use App\Entity\Rating;
+use App\Form\RatingType;
 use App\Repository\CampingRepository;
+use App\Repository\RatingRepository;
 use App\Entity\Participation;
 use App\Form\ParticipationType;
 use App\Repository\ParticipationRepository;
@@ -11,6 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 #[Route('/participation')]
 class ParticipationController extends AbstractController
@@ -22,23 +29,35 @@ class ParticipationController extends AbstractController
             'participations' => $participationRepository->findAll(),
         ]);
 
-        $entityManager = $this->getDoctrine()->getManager();
+       /* $entityManager = $this->getDoctrine()->getManager();
         $campings = $entityManager->getRepository(Camping::class)->findAll();
 
         return $this->render('participation/new.html.twig', [
             'campings' => $campings,
-        ]);
+        ]);*/
     }
         
     
     #[Route('/liste', name: 'app_participation_liste', methods: ['GET'])]
-    public function liste(CampingRepository $campingRepository): Response
+    public function liste(Request $request,CampingRepository $campingRepository, RatingRepository $ratingRepository): Response
     {
-       
-
         
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
+        $form->handleRequest($request);
+        $results = [];
+    $campings = $campingRepository->findAll();
+    foreach ($campings as $camping) {
+        $ratings = $ratingRepository->findBy(['camping' => $camping]);
+        $averageRating = count($ratings) > 0 ? array_sum($ratings) / count($ratings) : 0;
+        $results[] = [
+            'averageRating' => $averageRating
+        ];
+    }
         return $this->render('participation/new.html.twig', [
             'campings' => $campingRepository->findAll(),
+            'averageRating' => $averageRating,
+            'form' => $form->createView(),
         ]);
 
         
@@ -52,17 +71,17 @@ class ParticipationController extends AbstractController
         if (!$camping) {
             throw $this->createNotFoundException('Le camping correspondant à cet ID n\'existe pas');
         }
-        $dateParti = \DateTime::createFromFormat('Y-m-d H:i:s', '2023-04-09 10:30:00');
 
 // Appel de la méthode setDateParti() avec l'objet DateTime créé
-$participation->setDateParti($dateParti);
+        $participation->setDateParti($date);
         $participation->setNom($camping->getNom());
         $participation->setMontant($camping->getPrix());
         $participation->setEtat("En Attend");
         $participation->setRefp("PUser12023");
         $participation->setIdClient(00);
-        $participation->setIdCamp($id);
-        $participation->setIdRand(00);
+        //$participation->setIdCamp($id);
+        $participation->setIdCamp($camping);
+        //$participation->setIdRand('');
         $participation->setIdEvents(00);
         $participation->setNombre(00);
         

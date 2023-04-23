@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RandonneeRepository;
@@ -38,6 +40,14 @@ class Randonnee
     #[ORM\Column]
     private ?int $nbrPlacer;
 
+    #[ORM\OneToMany(mappedBy: 'randonnee', targetEntity: Rating::class)]
+    private Collection $ratings;
+
+    public function __construct()
+    {
+        $this->ratings = new ArrayCollection();
+    }
+
     public function getIdRandonnee(): ?int
     {
         return $this->idRandonnee;
@@ -55,12 +65,12 @@ class Randonnee
         return $this;
     }
 
-    public function getDateRand(): ?\DateTimeInterface
+    public function getDateRand(): ?\DateTime
     {
         return $this->dateRand;
     }
 
-    public function setDateRand(\DateTimeInterface $dateRand): self
+    public function setDateRand(\DateTime $dateRand): self
     {
         $this->dateRand = $dateRand;
 
@@ -139,5 +149,63 @@ class Randonnee
         return $this;
     }
 
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setRandonnee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getRandonnee() === $this) {
+                $rating->setRandonnee(null);
+            }
+        }
+
+        return $this;
+    }
+/**
+     * @return Collection<int, Favorite>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorites);
+            $favorite->setRandonnee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): self
+    {
+        if ($this->favorites->removeElement($favorite)) {
+            // set the owning side to null (unless already changed)
+            if ($favorite->getRandonnee() === $this) {
+                $favorite->setRandonnee(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

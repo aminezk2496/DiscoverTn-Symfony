@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-admin.html.twig' %}
 
 {% block title %}Camping{% endblock %}
 
@@ -52,7 +52,15 @@ a:hover {
 {% endblock %}
 
 {% block body %}
-    <h1>Camping</h1>
+    <main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1> Camping</h1>
+
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
 
     <table class="table">
         <tbody>
@@ -87,7 +95,7 @@ a:hover {
             </tr>
             <tr>
                 <th>Imagec</th>
-                <td>{{ camping.imagec }}</td>
+                <td><img class="card-img-top" src="{{ camping.imagec }}" ></td>
             </tr>
             <tr>
                 <th>Nbr_place</th>
@@ -101,5 +109,11 @@ a:hover {
 
     <a href="{{ path('app_camping_edit', {'idCamping': camping.idCamping}) }}">edit</a>
 
-    {{ include('camping/_delete_form.html.twig') }}
+    {{ include('camping/_delete_form.html.twig') }}</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
 {% endblock %}

@@ -7,13 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ParticipationRepository;
+use App\Entity\Camping;
 
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
-class Participation
+class Participation 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name:"id_parti")]
     private ?int $idParti=null;
 
     #[ORM\Column(length:50)]
@@ -21,12 +22,33 @@ class Participation
 
     #[ORM\Column]
     private ?int $idClient = NULL;
+   
+  /**
+     * @var \Camping
+     *
+     * @ORM\ManyToOne(targetEntity="Camping")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_camp", referencedColumnName="id_Camping", 
+     *      foreignKey=@ORM\ForeignKey(name="fk_participation_camping"))
+     * })
+     */    
+    
+    #[ORM\ManyToOne(targetEntity:"Camping")]
+    #[ORM\JoinColumn(name:"id_camp", referencedColumnName:"id_Camping")]
+    private ?Camping $idCamp;
 
-    #[ORM\Column]
-    private ?int $idCamp = NULL;
 
-    #[ORM\Column]
-    private ?int $idRand = NULL;
+    /**
+     * @var \Randonnee
+     *
+     * @ORM\ManyToOne(targetEntity="Randonnee")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_rand", referencedColumnName="id_randonnee")
+     * })
+     */
+    #[ORM\ManyToOne(targetEntity:"Randonnee")]
+    #[ORM\JoinColumn(name:"id_rand", referencedColumnName:"id_randonnee", nullable:true)]
+    private ?Randonnee $idRand = NULL; 
 
     #[ORM\Column]
     private ?int $idEvents = NULL;
@@ -77,24 +99,24 @@ class Participation
         return $this;
     }
 
-    public function getIdCamp(): ?int
+    public function getIdCamp(): ?Camping
     {
         return $this->idCamp;
     }
 
-    public function setIdCamp(?int $idCamp): self
+    public function setIdCamp(?Camping $idCamp): self
     {
         $this->idCamp = $idCamp;
 
         return $this;
     }
 
-    public function getIdRand(): ?int
+    public function getIdRand(): ?Randonnee
     {
         return $this->idRand;
     }
 
-    public function setIdRand(?int $idRand): self
+    public function setIdRand(?Randonnee $idRand): self
     {
         $this->idRand = $idRand;
 
@@ -198,28 +220,7 @@ class Participation
     }
 
  
-/**
- * @ORM\ManyToMany(targetEntity="App\Entity\Camping", inversedBy="participations")
- * @ORM\JoinTable(name="participation_camping",
- *   joinColumns={
- *     @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
- *   },
- *   inverseJoinColumns={
- *     @ORM\JoinColumn(name="camping_id", referencedColumnName="id")
- *   }
- * )
- */
-private $campings;
 
-public function __construct()
-{
-    $this->campings = new ArrayCollection();
-}
-
-public function getCampings(): Collection
-{
-    return $this->campings;
-}
 
 
 
