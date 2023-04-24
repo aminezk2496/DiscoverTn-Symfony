@@ -1,0 +1,19 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+favorite_camping:
+    path: '/camping/{id}/favorite'
+    controller: 'App\Controller\CampingController::favorite'
+    methods: ['POST']
+
+favorite_randonnee:
+    path: '/randonnee/{id}/favorite'
+    controller: 'App\Controller\RandonneeController::favoriteR'
+    methods: ['POST']
+
+app_pdf_generator:
+    path: '/pdf/generator/{id}'
+    controller: App\Controller\PdfGeneratorController::index
+    methods: ['GET']

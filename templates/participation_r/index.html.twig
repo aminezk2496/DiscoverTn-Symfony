@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participation index{% endblock %}
+
+{% block body %}
+    <h1>Participation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdParti</th>
+                <th>Refp</th>
+                <th>IdClient</th>
+                <th>IdEvents</th>
+                <th>Nombre</th>
+                <th>Montant</th>
+                <th>Etat</th>
+                <th>DateParti</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.idParti }}</td>
+                <td>{{ participation.refp }}</td>
+                <td>{{ participation.idClient }}</td>
+                <td>{{ participation.idEvents }}</td>
+                <td>{{ participation.nombre }}</td>
+                <td>{{ participation.montant }}</td>
+                <td>{{ participation.etat }}</td>
+                <td>{{ participation.dateParti ? participation.dateParti|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participation.nom }}</td>
+                <td>
+                    <a href="{{ path('app_participation_r_show', {'idParti': participation.idParti}) }}">show</a>
+                    <a href="{{ path('app_participation_r_edit', {'idParti': participation.idParti}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participation_r_new') }}">Create new</a>
+{% endblock %}
