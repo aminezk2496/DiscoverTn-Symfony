@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Commentaire;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,9 @@ class CommentaireType extends AbstractType
     {
         $builder
 
-            ->add('contenu');
+            ->add('contenu')
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

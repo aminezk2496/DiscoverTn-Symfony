@@ -1,12 +1,13 @@
-{% extends 'basefront.html.twig' %}
+{# templates/comment/popup.html.twig #}
 
-{% block title %}New Commentaire
-{% endblock %}
+<div id="comment-popup" class="popup">
+	<h2>Add Comment</h2>
 
-{% block body %}
-	<h1>Create new Commentaire</h1>
+	{{ form_start(form) }}
 
-	{{ include('commentaire/_form.html.twig') }}
+	{{ form_row(form.contenu) }}
 
-	<a href="{{ path('app_commentaire_index') }}">back to list</a>
-{% endblock %}
+	{{ form_row(form.submit) }}
+
+	{{ form_end(form) }}
+</div>

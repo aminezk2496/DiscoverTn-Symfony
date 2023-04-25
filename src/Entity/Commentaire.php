@@ -28,9 +28,10 @@ class Commentaire
     private $contenu;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Publication")
+     * @ORM\JoinColumn(name="idpub", referencedColumnName="id")
      */
-    private $idpub;
+    private $publication;
 
     public function getId(): ?int
     {
@@ -61,15 +62,17 @@ class Commentaire
         return $this;
     }
 
-    public function getIdpub(): ?int
+
+    public function getPublication(): ?int
     {
-        return $this->idpub;
+        return $this->publication->getId();
     }
 
-    public function setIdpub(int $idpub): self
+    public function setPublication(Publication $publication): self
     {
-        $this->idpub = $idpub;
+        $this->publication = $publication;
 
         return $this;
     }
+
 }

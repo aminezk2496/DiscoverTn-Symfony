@@ -22,7 +22,7 @@
 					<td>{{ commentaire.id }}</td>
 					<td>{{ commentaire.iduser }}</td>
 					<td>{{ commentaire.contenu }}</td>
-					<td>{{ commentaire.idpub }}</td>
+
 					<td>
 						<a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
 						<a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
@@ -36,5 +36,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_commentaire_new') }}">Create new</a>
+
 {% endblock %}

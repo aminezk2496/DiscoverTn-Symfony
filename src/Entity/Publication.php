@@ -31,7 +31,7 @@ class Publication
      * @ORM\Column(name="contenu", type="string", length=1000, nullable=false)
      * @Assert\Length(
      *      min = 5,
-     *      max = 10,
+     *      max = 100,
      *      minMessage = "Your Type must be at least {{ limit }} characters long",
      *      maxMessage = "Your Type cannot be longer than {{ limit }} characters"
      * )
@@ -65,6 +65,10 @@ class Publication
     {
         return $this->id;
     }
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="publication", cascade={"persist", "remove"})
+     */
+    private $commentaire;
 
     public function getContenu(): ?string
     {

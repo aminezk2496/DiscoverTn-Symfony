@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\Publication;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
+use App\Repository\PublicationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/commentaire')]
 class CommentaireController extends AbstractController
@@ -20,27 +23,53 @@ class CommentaireController extends AbstractController
             'commentaires' => $commentaireRepository->findAll(),
         ]);
     }
+    function badwords($message){
+        $badwords = array("test","table","badword");
+        $filter = array("****","*****","*******");
+        $message = str_replace($badwords,$filter,$message);
+        return $message;
+    }
 
-    #[Route('/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommentaireRepository $commentaireRepository): Response
-    {
+    #[Route('/{id}/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, $id, CommentaireRepository $commentaireRepository, PublicationRepository $publicationRepository): JsonResponse    {
         $com = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $com);
         $form->handleRequest($request);
+        $pub = $publicationRepository->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $com->setIdpub(20);
+            $com->setContenu($this->badwords($com->getContenu()));
+            $com->setPublication($pub);
             $com->setIduser('test123');
             $commentaireRepository->save($com, true);
 
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            // Return a JSON response indicating success
+            return new JsonResponse(['success' => true]);
         }
 
-        return $this->renderForm('commentaire/new.html.twig', [
-            'commentaire' => $com,
-            'form' => $form,
-        ]);
+        // Return a JSON response indicating errors
+        $errors = $this->getFormErrors($form);
+        return new JsonResponse(['success' => false, 'errors' => $errors]);
     }
+
+    private function getFormErrors(FormInterface $form): array
+    {
+        $errors = [];
+
+        foreach ($form->getErrors() as $error) {
+            $errors[] = $error->getMessage();
+        }
+
+        foreach ($form->all() as $childForm) {
+            if (!$childForm->isValid()) {
+                $errors[$childForm->getName()] = $this->getFormErrors($childForm);
+            }
+        }
+
+        return $errors;
+    }
+
+
 
     #[Route('/{id}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
@@ -51,31 +80,31 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_commentaire_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
+    public function edit(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): JsonResponse
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentaireRepository->save($commentaire, true);
-            $commentaire->setIdpub($commentaire->getIdpub());
-            $commentaire->setIduser($commentaire->getIduser());
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+
+            return new JsonResponse(['success' => true]);
         }
+          // Return a JSON response indicating errors
+        $errors = $this->getFormErrors($form);
+        return new JsonResponse(['success' => false, 'errors' => $errors]);
 
-        return $this->renderForm('commentaire/edit.html.twig', [
-            'commentaire' => $commentaire,
-            'form' => $form,
-        ]);
     }
-
-    #[Route('/{id}', name: 'app_commentaire_delete', methods: ['POST'])]
-    public function delete(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
+    /**
+     * @Route("/commentaire/delete/{id}", name="app_commentaire_delete_ajax", methods={"DELETE"})
+     */
+    public function deleteCommentaireAjax(Request $request, Commentaire $commentaire): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete' . $commentaire->getId(), $request->request->get('_token'))) {
-            $commentaireRepository->remove($commentaire, true);
-        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($commentaire);
+        $entityManager->flush();
 
-        return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+        return new JsonResponse(['success' => true]);
     }
+
 }
