@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>Supprimer la reservation</h1>
+
+	{{ form_start(form) }}
+
+	<p>Êtes-vous sûr de vouloir supprimer la reservation "{{ reservations.sujet }}" ?</p>
+
+	{{ form_widget(form.submit) }}
+
+	{{ form_end(form) }}
+
+{% endblock %}

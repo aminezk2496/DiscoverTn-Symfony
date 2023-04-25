@@ -2,84 +2,70 @@
 
 namespace App\Entity;
 
+use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ReservationRepository;
 use DateTime;
 
-/**
- * Reservation
- *
- * @ORM\Table(name="reservation")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_reser", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private ?int $idReser=null;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_heber", type="integer", length=100, nullable=false)
-     */
-    private ?int $idHeber=null;
-
-    
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="date_reser", type="date", length=100, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $dateReser;
+    private ?string $nomHeber = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "Veuillez remplir le champ")]
+    private ?\DateTime $dateReser = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="duree", type="integer", length=100, nullable=false)
-     */
+    #[ORM\Column]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
     #[Assert\lenght(min:1, message: "Duree min d'un jour")]
     #[Assert\lenght(max:15, message: "Duree max atteinte")]
-    private ?int $duree=null;
+    private ?int $duree = null;
 
-    public function getIdReser(): ?int
+    #[ORM\ManyToOne(inversedBy: 'reser')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Hebergement $Reservation = null;
+
+    public function getId(): ?int
     {
-        return $this->idReser;
+        return $this->id;
     }
 
-    public function getIdHeber(): ?int
+    public function getNomHeber(): ?string
     {
-        return $this->idHeber;
+        return $this->nomHeber;
     }
 
-    public function setIdHeber(int $idHeber): self
+    public function setNomHeber(string $nomHeber): self
     {
-        $this->idHeber = $idHeber;
+        $this->nomHeber = $nomHeber;
 
         return $this;
     }
 
-    public function getDateReser(): ?DateTime
+    public function getDateReser(): ?\DateTime
     {
         return $this->dateReser;
     }
 
-    public function setDateReser(DateTime $dateReser): self
+    public function setDateReser(\DateTime $dateReser): self
     {
         $this->dateReser = $dateReser;
 
         return $this;
     }
+
+    /*public function getFormattedDateReser(): ?string
+    {
+        return $this->dateReser ? $this->dateReser->format('Y-m-d H:i:s') : null;
+    }*/
 
     public function getDuree(): ?int
     {
@@ -93,5 +79,15 @@ class Reservation
         return $this;
     }
 
+    public function getReservation(): ?Hebergement
+    {
+        return $this->Reservation;
+    }
 
+    public function setReservation(?Hebergement $Reservation): self
+    {
+        $this->Reservation = $Reservation;
+
+        return $this;
+    }
 }

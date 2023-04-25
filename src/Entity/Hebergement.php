@@ -2,87 +2,61 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\HebergementRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Reservation;
 
-
-/**
- * Hebergement
- *
- * @ORM\Table(name="hebergement")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: HebergementRepository::class)]
 class Hebergement
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_heber", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idHeber ;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_heber", type="string", length=255, nullable=false)
-     */  
-    #[Assert\NotBlank(message: "Veuillez sasir un Nom")]
-    private $nomHeber;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description_heber", type="string", length=100, nullable=false)
-     */    
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez sasir un Nom")]
+    private ?string $nomHeber = null;
+
+    #[ORM\Column(length: 255)]
     #[Assert\lenght(max:200, message: "Taille maximum attteinte")]
     private ?string $descriptionHeber = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_chambre", type="integer", length=100, nullable=false)
-     */
+    #[ORM\Column]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $nbChambre;
+    private ?int $nbChambre = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix_heber", type="float", length=100, nullable=false)
-     */
+    #[ORM\Column]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $prixHeber ;
+    private ?float $prixHeber = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="localisation_heber", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $localisationHeber;
+    private ?string $localisationHeber = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="contact_heber", type="integer", length=100, nullable=false)
-     */
+    #[ORM\Column]
+    #[Assert\lenght(min:6, message: "6 chiffres minimum")]
+    #[Assert\lenght(max:10, message: "10 chiffres maximum")]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $contactHeber ;
+    private ?int $contactHeber = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type_heber", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez remplir le champ")]
-    private $typeHeber ;
+    private ?string $typeHeber = null;
 
-    public function getIdHeber(): ?int
+    #[ORM\OneToMany(mappedBy: 'Reservation', targetEntity: Reservation::class, orphanRemoval: true)]
+    private Collection $reser; 
+
+    public function __construct()
     {
-        return $this->idHeber;
+        $this->reser = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNomHeber(): ?string
@@ -169,5 +143,40 @@ class Hebergement
         return $this;
     }
 
+    /**
+     * @return Collection<int, Reservation>
+     */
+    
+    public function getReser(): Collection
+    {
+        return $this->reser;
+    }
+
+    public function addReser(Reservation $reser): self
+    {
+        if (!$this->reser->contains($reser)) {
+            $this->reser->add($reser);
+            $reser->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReser(Reservation $reser): self
+    {
+        if ($this->reser->removeElement($reser)) {
+            // set the owning side to null (unless already changed)
+            if ($reser->getReservation() === $this) {
+                $reser->setReservation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nomHeber;
+    }
 
 }

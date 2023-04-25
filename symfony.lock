@@ -35,6 +35,18 @@
             "./migrations/.gitignore"
         ]
     },
+    "mixpanel/mixpanel-php": {
+        "version": "2.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.8",
+            "ref": "11d9b1125137cb0ddb519084f3884d4c5f72d6a1"
+        },
+        "files": [
+            "./config/packages/mixpanel.yaml"
+        ]
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {

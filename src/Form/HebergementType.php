@@ -6,6 +6,7 @@ use App\Entity\Hebergement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class HebergementType extends AbstractType
 {
@@ -16,9 +17,23 @@ class HebergementType extends AbstractType
             ->add('descriptionHeber')
             ->add('nbChambre')
             ->add('prixHeber')
-            ->add('localisationHeber')
+            ->add('localisationHeber', ChoiceType::class, [
+                'choices' => [
+                    'Tunis' => 'Tunis',
+                    'Sousse' => 'Sousse',
+                    'Nabeul' => 'Nabeul',
+                ],
+                'placeholder' => 'Sélectionner une ville',
+            ])
             ->add('contactHeber')
-            ->add('typeHeber')
+            ->add('typeHeber', ChoiceType::class, [
+                'choices' => [
+                    'Motel' => 'Motel',
+                    'Hotel' => 'Hotel',
+                    'Maison hote' => 'Maison hote',
+                ],
+                'placeholder' => 'Sélectionner votre type',
+            ])
         ;
     }
 
