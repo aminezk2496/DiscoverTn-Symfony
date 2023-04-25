@@ -123,33 +123,24 @@
                     </div>
                 </div>
             </div>
-            <div class="container" style="margin-left: 100px;margin-top: 15px">
-            <div class="card" style="height: 500px; width: 500px">
-                <div class="row" style="margin-inside: 5px">
+            <div class="row">
+                <div class="col-md-12 contact">
                     {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
-                    <div class="col-md-12">
-                        <input type="text" class="form-control"  value="{{ user.prenom }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" disabled>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" value="{{ user.nom }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" disabled>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control" value="{{ user.email }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" disabled>
-                    </div>
-                        {{ form_widget(form.descriptionReclamation) }}
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="submit" class="btn btn-success">Envoyer</button>
-                        </div>
-                        <div class="col-md-3">
-                            <button  type="button" class="btn btn-danger"><a style="color: #fff" href="{{ path('index_front')}}">Annuler</a></button>
-                        </div>
-                    </div>
+                    <input type="text" class="text"  value="{{ user.prenom }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" disabled>
+                    <input type="text" class="text" value="{{ user.nom }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" disabled>
+                    <input type="text" class="text" value="{{ user.email }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" disabled>
+                    <br>
+                    {{ form_widget(form.descriptionReclamation) }}
 
-                    {{ form_end(form) }}
+                    <button type="submit" class="btn btn-success">Envoyer</button>
+                    <button  type="button" class="btn btn-danger"><a style="color: #fff" href="{{ path('index_front')}}">Annuler</a></button>
+
+
                 </div>
-            </div>
-            </div>
+
+
+                {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>
