@@ -1,0 +1,74 @@
+{% extends 'base-front.html.twig' %}
+
+
+{% block body %}
+
+   <main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Liste des randonnee</h1>
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+
+    <hr>
+    <div class="row">
+        {% for result in results %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img class="card-img-top" src="{{ result.randonnee.imagesr }}" alt="{{ result.randonnee.nom }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.randonnee.nom }}</h5>
+                        <h5>{{ result.randonnee.dateRand ? result.randonnee.dateRand|date('Y-m-d') : '' }}</h5>
+                        <h5>{{ result.randonnee.lieux }}</h5>
+                        <h5>{{ result.randonnee.prix }}</h5>
+                        <h5>{{ result.randonnee.niveauDiff }}</h5>
+                        <h5>{{ result.randonnee.nbrPlacer }}</h5>
+                        <p class="card-text">{{ result.randonnee.programme }}</p>
+                         {% for rating in result.randonnee.ratings %}
+
+                                {% if rating.rating > 0 %}
+                         <p>Average rating: {{ rating.rating }}.</p>
+                         {% else %}
+                        <p>N'est pas encore été noté.</p> 
+                        
+                        <form method="post" action="{{ path('app_Rating_ratera', {'id': result.randonnee.idRandonnee}) }}">
+                        
+                                    {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.rating) }}<i class="bi bi-star-fill"></i>
+                            {{ form_errors(form.rating) }}
+                    </div>
+                {{ form_end(form) }}
+
+                    </form>
+                        {% endif %}
+                        {% endfor %}
+                        <a href="{{ path('app_Rating_ratera', {'id': result.randonnee.idRandonnee}) }}" class="btn btn-primary">Rate this Randonnee</a>
+                        <a href="{{ path('app_participation_new', {'id': result.randonnee.idRandonnee}) }}" class="btn btn-primary">Participer</a>
+                        
+                        <form action="{{ path('favorite_randonnee', {'id': result.randonnee.idRandonnee}) }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token('favorite_randonnee' ~ result.randonnee.idRandonnee) }}">
+                <button type="submit">Add to favorites</button>
+            </form>
+            
+            
+                    </div>
+                </div>
+            </div>
+        
+      {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+    </div>
+    </div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+{% endblock %}

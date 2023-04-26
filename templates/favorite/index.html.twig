@@ -1,0 +1,75 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Favorite {% endblock %}
+
+{% block body %}
+    
+<main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Favorite </h1>
+
+					<div class="col-12">
+						<div class="card">
+                        <div class="card-body">
+	<table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>Lieux</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>		
+        				
+    {% if campings is not empty %}
+    
+    {% for camping in campings %}
+        
+    <tr>
+       <td>{{ camping.nom }}</td>
+                <td>{{ camping.dateDebut ? camping.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ camping.lieux }}</td>
+                <td>{{ camping.prix }}</td>
+                <td>
+                    {% for favorite in camping.favorites %}
+                            <a href="{{ path('app_favorite_show', {'idF': favorite.idF}) }}">show</a>
+                            <a href="{{ path('app_participation_new', {'id': camping.idCamping}) }}" >Participer</a>
+                        {% endfor %}
+                </td>
+              </tr>  
+    {% endfor %}
+   
+    
+{% else %}
+    {% for randonnee in randonnees %}
+     
+    <tr>
+                <td>{{ randonnee.nom }}</td>
+                <td>{{ randonnee.dateRand ? randonnee.dateRand|date('Y-m-d') : '' }}</td>
+                <td>{{ randonnee.lieux }}</td>
+                <td>{{ randonnee.prix }}</td>
+                <td>
+                    {% for favorite in randonnee.favorites %}
+                            <a href="{{ path('app_favorite_show', {'idF': favorite.idF}) }}">show</a>
+                        {% endfor %}
+                </td>
+       </tr>
+    {% endfor %}
+   
+{% endif %} 
+
+</tbody>
+    </table>
+    
+</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+{% endblock %}
