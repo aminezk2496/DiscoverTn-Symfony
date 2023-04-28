@@ -121,6 +121,7 @@ class UtilisateurController extends AbstractController
             $user->setRankUtilisateur(0);
             //  $captcha=$form->get('captchaCode')->getErrors();
             // $count=$captcha->count();
+            //add to delete
 
 
             $x = false;
