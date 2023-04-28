@@ -1,0 +1,47 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <!-- Table with stripped rows -->
+                    <table class="table">
+                        <thead>
+                        <tr style="font-size: 10px">
+                            <th scope="col"  style="font-size: 10px">ID</th>
+                            <th scope="col"  style="font-size: 10px">Nom</th>
+                            <th scope="col"  style="font-size: 10px">Prenom</th>
+                            <th scope="col"  style="font-size: 10px">Email</th>
+                            <th scope="col"  style="font-size: 10px">Login</th>
+                            <th scope="col"  style="font-size: 10px">Password SHA1</th>
+                            <th scope="col"  style="font-size: 10px">Adresse</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for user in userers %}
+
+                            <tr  style="font-size: 10px">
+                                <td  style="font-size: 10px">{{ user.idUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.nomUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.prenomUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.emailUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.loginUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.mdpUtilisateur}}</td>
+                                <td  style="font-size: 10px">{{ user.adresseUtilisateur}}</td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

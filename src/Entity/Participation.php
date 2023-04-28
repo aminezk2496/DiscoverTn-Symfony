@@ -2,135 +2,107 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ParticipationRepository;
-use App\Entity\Camping;
 
-#[ORM\Entity(repositoryClass: ParticipationRepository::class)]
-class Participation 
+/**
+ * Participation
+ *
+ * @ORM\Table(name="participation")
+ * @ORM\Entity
+ */
+class Participation
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(name:"id_parti")]
-    private ?int $idParti=null;
-
-    #[ORM\Column(length:50)]
-    private ?string $refp;
-
-    #[ORM\Column]
-    private ?int $idClient = NULL;
-   
-  /**
-     * @var \Camping
+    /**
+     * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Camping")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_camp", referencedColumnName="id_Camping", 
-     *      foreignKey=@ORM\ForeignKey(name="fk_participation_camping"))
-     * })
-     */    
-    
-    #[ORM\ManyToOne(targetEntity:"Camping")]
-    #[ORM\JoinColumn(name:"id_camp", referencedColumnName:"id_Camping")]
-    private ?Camping $idCamp;
-
+     * @ORM\Column(name="id_Parti", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idParti;
 
     /**
-     * @var \Randonnee
+     * @var int|null
      *
-     * @ORM\ManyToOne(targetEntity="Randonnee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_rand", referencedColumnName="id_randonnee")
-     * })
+     * @ORM\Column(name="id_Camp", type="integer", nullable=true)
      */
-    #[ORM\ManyToOne(targetEntity:"Randonnee")]
-    #[ORM\JoinColumn(name:"id_rand", referencedColumnName:"id_randonnee", nullable:true)]
-    private ?Randonnee $idRand = NULL; 
+    private $idCamp;
 
-    #[ORM\Column]
-    private ?int $idEvents = NULL;
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="id_Rand", type="integer", nullable=true)
+     */
+    private $idRand;
 
-    #[ORM\Column]
-    private ?int $nombre;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Nombre", type="integer", nullable=false)
+     */
+    private $nombre;
 
-    #[ORM\Column]
-    private ?float $montant;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Montant", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $montant;
 
-    #[ORM\Column(length:10)]
-    private ?string $etat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Etat", type="string", length=10, nullable=false)
+     */
+    private $etat;
 
-    #[ORM\Column]
-    private ?\DateTime $dateParti;
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="date_Parti", type="date", nullable=true)
+     */
+    private $dateParti;
 
-    #[ORM\Column(length:100)]
-    private ?string $nom;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_evenement", type="integer", nullable=false)
+     */
+    private $idEvenement;
 
-    
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="id_utilisateur", type="integer", nullable=true)
+     */
+    private $idUtilisateur;
 
     public function getIdParti(): ?int
     {
         return $this->idParti;
     }
 
-    public function getRefp(): ?string
-    {
-        return $this->refp;
-    }
-
-    public function setRefp(string $refp): self
-    {
-        $this->refp = $refp;
-
-        return $this;
-    }
-
-    public function getIdClient(): ?int
-    {
-        return $this->idClient;
-    }
-
-    public function setIdClient(?int $idClient): self
-    {
-        $this->idClient = $idClient;
-
-        return $this;
-    }
-
-    public function getIdCamp(): ?Camping
+    public function getIdCamp(): ?int
     {
         return $this->idCamp;
     }
 
-    public function setIdCamp(?Camping $idCamp): self
+    public function setIdCamp(?int $idCamp): self
     {
         $this->idCamp = $idCamp;
 
         return $this;
     }
 
-    public function getIdRand(): ?Randonnee
+    public function getIdRand(): ?int
     {
         return $this->idRand;
     }
 
-    public function setIdRand(?Randonnee $idRand): self
+    public function setIdRand(?int $idRand): self
     {
         $this->idRand = $idRand;
-
-        return $this;
-    }
-
-    public function getIdEvents(): ?int
-    {
-        return $this->idEvents;
-    }
-
-    public function setIdEvents(?int $idEvents): self
-    {
-        $this->idEvents = $idEvents;
 
         return $this;
     }
@@ -176,53 +148,36 @@ class Participation
         return $this->dateParti;
     }
 
-    public function setDateParti(\DateTimeInterface $dateParti): self
+    public function setDateParti(?\DateTimeInterface $dateParti): self
     {
         $this->dateParti = $dateParti;
 
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getIdEvenement(): ?int
     {
-        return $this->nom;
+        return $this->idEvenement;
     }
 
-    public function setNom(string $nom): self
+    public function setIdEvenement(int $idEvenement): self
     {
-        $this->nom = $nom;
+        $this->idEvenement = $idEvenement;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Camping>
-     */
-    public function getCamping(): Collection
+    public function getIdUtilisateur(): ?int
     {
-        return $this->camping;
+        return $this->idUtilisateur;
     }
 
-    public function addCamping(Camping $camping): self
+    public function setIdUtilisateur(?int $idUtilisateur): self
     {
-        if (!$this->camping->contains($camping)) {
-            $this->camping->add($camping);
-        }
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
-
-    public function removeCamping(Camping $camping): self
-    {
-        $this->camping->removeElement($camping);
-
-        return $this;
-    }
-
- 
-
-
-
 
 
 }

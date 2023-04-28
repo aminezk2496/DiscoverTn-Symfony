@@ -2,61 +2,95 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\CampingRepository;
-use Datetime;
 
-#[ORM\Entity(repositoryClass: CampingRepository::class)]
-
+/**
+ * Camping
+ *
+ * @ORM\Table(name="camping")
+ * @ORM\Entity
+ */
 class Camping
 {
-   
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column (name:"id_Camping")]
-    private ?int $idCamping = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Camping", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCamping;
 
-   
-    #[ORM\Column(length:1000)]
-    private ?string $nom = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=1000, nullable=false)
+     */
+    private $nom;
 
-   
-    #[ORM\Column]
-    private ?\DateTime $dateDebut = null;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_Debut", type="date", nullable=false)
+     */
+    private $dateDebut;
 
-  
-    #[ORM\Column]
-    private ?\DateTime $dateFin = null;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_Fin", type="date", nullable=false)
+     */
+    private $dateFin;
 
-   
-    #[ORM\Column (type:"integer")]
-    private ?int $periode = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Periode", type="integer", nullable=false)
+     */
+    private $periode;
 
-    
-    #[ORM\Column (type:"float")]
-    private ?float $prix = null;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Prix", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prix;
 
-   
-    #[ORM\Column(length:100)]
-    private ?string $lieux = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Lieux", type="string", length=100, nullable=false)
+     */
+    private $lieux;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Description", type="text", length=0, nullable=false)
+     */
+    private $description;
 
-    
-    #[ORM\Column(length:255)]
-    private $imagec = 'NULL';
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="ImageC", type="string", length=255, nullable=true)
+     */
+    private $imagec;
 
-   
-    #[ORM\Column]
-    private ?int $nbr_place = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Nbr_PlaceC", type="integer", nullable=false)
+     */
+    private $nbrPlacec;
 
-    
-    #[ORM\Column]
-    private $image = 'NULL';
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Image", type="blob", length=0, nullable=true)
+     */
+    private $image;
 
     public function getIdCamping(): ?int
     {
@@ -75,24 +109,24 @@ class Camping
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTime
+    public function getDateDebut(): ?\DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTime $dateDebut): self
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTime
+    public function getDateFin(): ?\DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTime $dateFin): self
+    public function setDateFin(\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -159,14 +193,14 @@ class Camping
         return $this;
     }
 
-    public function getNbrPlace(): ?int
+    public function getNbrPlacec(): ?int
     {
-        return $this->nbr_place;
+        return $this->nbrPlacec;
     }
 
-    public function setNbrPlace(int $nbr_place): self
+    public function setNbrPlacec(int $nbrPlacec): self
     {
-        $this->nbr_place  = $nbr_place ;
+        $this->nbrPlacec = $nbrPlacec;
 
         return $this;
     }
@@ -182,115 +216,6 @@ class Camping
 
         return $this;
     }
-    
-/**
- * @ORM\ManyToMany(targetEntity="App\Entity\Participation", mappedBy="camping")
- */
-private Collection $participations;
 
-
-#[ORM\OneToMany(mappedBy: 'camping', targetEntity: Rating::class)]
-private Collection $ratings;
-
-#[ORM\OneToMany(mappedBy: 'camping', targetEntity: Favorite::class)]
-private Collection $favorites;
- 
-
-public function __construct()
-{
-    $this->participations = new ArrayCollection();
-    $this->ratings = new ArrayCollection();
-    $this->favorites = new ArrayCollection();
-    
-}
-/**
- * @return Collection<int, Participation>
- */
-public function getParticipations(): Collection
-{
-    return $this->participations;
-}
-
-public function addParticipation(Participation $participation): self
-{
-    if (!$this->participations->contains($participation)) {
-        $this->participations->add($participation);
-        $rating->setCamping($this);
-    }
-
-    return $this;
-}
-
-public function removeParticipation(Participation $participation): self
-{
-    if ($this->ratings->removeElement($participation)) {
-        // set the owning side to null (unless already changed)
-        if ($rating->getCamping() === $this) {
-            $rating->setCamping(null);
-        }
-    }
-
-    return $this;
-}
-
-/**
- * @return Collection<int, Rating>
- */
-public function getRatings(): Collection
-{
-    return $this->ratings;
-}
-
-public function addRating(Rating $rating): self
-{
-    if (!$this->ratings->contains($rating)) {
-        $this->ratings->add($rating);
-        $rating->setCamping($this);
-    }
-
-    return $this;
-}
-
-public function removeRating(Rating $rating): self
-{
-    if ($this->ratings->removeElement($rating)) {
-        // set the owning side to null (unless already changed)
-        if ($rating->getCamping() === $this) {
-            $rating->setCamping(null);
-        }
-    }
-
-    return $this;
-}
-
-/**
- * @return Collection<int, Favorite>
- */
-public function getFavorites(): Collection
-{
-    return $this->favorites;
-}
-
-public function addFavorite(Favorite $favorite): self
-{
-    if (!$this->favorites->contains($favorite)) {
-        $this->favorites->add($favorite);
-        $favorite->setCamping($this);
-    }
-
-    return $this;
-}
-
-public function removeFavorite(Favorite $favorite): self
-{
-    if ($this->favorites->removeElement($favorite)) {
-        // set the owning side to null (unless already changed)
-        if ($favorite->getCamping() === $this) {
-            $favorite->setCamping(null);
-        }
-    }
-
-    return $this;
-}
 
 }

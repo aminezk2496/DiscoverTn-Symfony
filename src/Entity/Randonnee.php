@@ -2,51 +2,81 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\RandonneeRepository;
 
-#[ORM\Entity(repositoryClass: RandonneeRepository::class)]
+/**
+ * Randonnee
+ *
+ * @ORM\Table(name="randonnee")
+ * @ORM\Entity
+ */
 class Randonnee
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idRandonnee;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Randonnee", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idRandonnee;
 
-    #[ORM\Column(length:1000)]
-    private ?string $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=1000, nullable=false)
+     */
+    private $nom;
 
-    #[ORM\Column]
-    private ?\DateTime $dateRand;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_Rand", type="date", nullable=false)
+     */
+    private $dateRand;
 
-    #[ORM\Column(length:1000)]
-    private ?string $lieux;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Lieux", type="string", length=1000, nullable=false)
+     */
+    private $lieux;
 
-    #[ORM\Column]
-    private ?float $prix;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="Prix", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $prix;
 
-    #[ORM\Column(length:50)]
-    private ?string $niveauDiff;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Niveau_diff", type="string", length=50, nullable=false)
+     */
+    private $niveauDiff;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string$programme;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Programme", type="text", length=0, nullable=false)
+     */
+    private $programme;
 
-    #[ORM\Column(length:255)]
-    private ?string $imagesr;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ImagesR", type="string", length=255, nullable=false)
+     */
+    private $imagesr;
 
-    #[ORM\Column]
-    private ?int $nbrPlacer;
-
-    #[ORM\OneToMany(mappedBy: 'randonnee', targetEntity: Rating::class)]
-    private Collection $ratings;
-
-    public function __construct()
-    {
-        $this->ratings = new ArrayCollection();
-    }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Nbr_PlaceR", type="integer", nullable=false)
+     */
+    private $nbrPlacer;
 
     public function getIdRandonnee(): ?int
     {
@@ -65,12 +95,12 @@ class Randonnee
         return $this;
     }
 
-    public function getDateRand(): ?\DateTime
+    public function getDateRand(): ?\DateTimeInterface
     {
         return $this->dateRand;
     }
 
-    public function setDateRand(\DateTime $dateRand): self
+    public function setDateRand(\DateTimeInterface $dateRand): self
     {
         $this->dateRand = $dateRand;
 
@@ -149,63 +179,5 @@ class Randonnee
         return $this;
     }
 
-    /**
-     * @return Collection<int, Rating>
-     */
-    public function getRatings(): Collection
-    {
-        return $this->ratings;
-    }
-
-    public function addRating(Rating $rating): self
-    {
-        if (!$this->ratings->contains($rating)) {
-            $this->ratings->add($rating);
-            $rating->setRandonnee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRating(Rating $rating): self
-    {
-        if ($this->ratings->removeElement($rating)) {
-            // set the owning side to null (unless already changed)
-            if ($rating->getRandonnee() === $this) {
-                $rating->setRandonnee(null);
-            }
-        }
-
-        return $this;
-    }
-/**
-     * @return Collection<int, Favorite>
-     */
-    public function getFavorites(): Collection
-    {
-        return $this->favorites;
-    }
-
-    public function addFavorite(Favorite $favorite): self
-    {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites->add($favorites);
-            $favorite->setRandonnee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavorite(Favorite $favorite): self
-    {
-        if ($this->favorites->removeElement($favorite)) {
-            // set the owning side to null (unless already changed)
-            if ($favorite->getRandonnee() === $this) {
-                $favorite->setRandonnee(null);
-            }
-        }
-
-        return $this;
-    }
 
 }
