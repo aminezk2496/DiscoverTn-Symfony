@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Utilisateur
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Utilisateur
 {
+
     /**
      * @var int
      *
@@ -25,34 +27,47 @@ class Utilisateur
      * @var string|null
      *
      * @ORM\Column(name="nom_utilisateur", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(
+     *      min = 4,
+     *      minMessage = "Your first name must be at least  4  characters long",
+     * )
      */
     private $nomUtilisateur;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="Le prenom est obligatoire")
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least  4  characters long",
+     *      maxMessage = "Your first name cannot be longer than 50 characters"
+     * )
      * @ORM\Column(name="prenom_utilisateur", type="string", length=255, nullable=true)
      */
     private $prenomUtilisateur;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="Email est obligatoire")
      * @ORM\Column(name="email_utilisateur", type="string", length=255, nullable=true)
      */
     private $emailUtilisateur;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="Email est obligatoire")
+     * @Assert\Length(6)
      * @ORM\Column(name="login_utilisateur", type="string", length=255, nullable=true)
      */
     private $loginUtilisateur;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="MDP est obligatoire")
      * @ORM\Column(name="mdp_utilisateur", type="string", length=255, nullable=true)
+     * @Assert\Length(6)
      */
     private $mdpUtilisateur;
 
@@ -60,6 +75,8 @@ class Utilisateur
      * @var string|null
      *
      * @ORM\Column(name="image_utilisateur", type="string", length=255, nullable=true)
+     *       @Assert\NotBlank(message="MDP est obligatoire")
+
      */
     private $imageUtilisateur;
 
@@ -67,6 +84,8 @@ class Utilisateur
      * @var string|null
      *
      * @ORM\Column(name="rank_utilisateur", type="string", length=255, nullable=true)
+     *       @Assert\NotBlank(message="MDP est obligatoire")
+
      */
     private $rankUtilisateur;
 
@@ -74,6 +93,11 @@ class Utilisateur
      * @var string|null
      *
      * @ORM\Column(name="telephone_utilisateur", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="telephone est obligatoire")
+     *  @Assert\Regex(
+     *     pattern="/^\d+$/",
+     *     message="The value should contain only digits."
+     * )
      */
     private $telephoneUtilisateur;
 
@@ -81,8 +105,14 @@ class Utilisateur
      * @var string|null
      *
      * @ORM\Column(name="adresse_utilisateur", type="string", length=255, nullable=true)
+     *       @Assert\NotBlank(message="MDP est obligatoire")
      */
     private $adresseUtilisateur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reclamation", mappedBy="utilisateur", cascade={"persist", "remove"})
+     */
+    private $reclamation;
 
     public function getIdUtilisateur(): ?int
     {
@@ -201,11 +231,6 @@ class Utilisateur
         $this->adresseUtilisateur = $adresseUtilisateur;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->nomUtilisateur. " " .$this->prenomUtilisateur. " " .$this->adresseUtilisateur. " " .$this->telephoneUtilisateur. " " .$this->emailUtilisateur;
     }
 
 

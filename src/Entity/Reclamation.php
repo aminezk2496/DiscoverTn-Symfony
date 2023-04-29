@@ -25,6 +25,14 @@ class Reclamation
      */
     private $idReclamation;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur")
+     * @ORM\JoinColumn(name="id_utilisateur", referencedColumnName="id_utilisateur")
+     */
+    private $utilisateur;
+
+
     /**
      * @var string|null
      *
@@ -60,12 +68,7 @@ class Reclamation
      */
     private $etatReclamation;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_utilisateur", type="integer", nullable=false)
-     */
-    private $idUtilisateur;
+
 
     public function getIdReclamation(): ?int
     {
@@ -132,14 +135,14 @@ class Reclamation
         return $this;
     }
 
-    public function getIdUtilisateur(): ?int
+    public function getUtilisateur(): ?int
     {
-        return $this->idUtilisateur;
+        return $this->utilisateur;
     }
 
-    public function setIdUtilisateur(int $idUtilisateur): self
+    public function setUtilisateur(Utilisateur $utilisateur): self
     {
-        $this->idUtilisateur = $idUtilisateur;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
