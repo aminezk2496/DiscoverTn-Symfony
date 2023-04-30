@@ -260,8 +260,7 @@ class UtilisateurController extends AbstractController
                 $session = $request->getSession();
                 $session->set('email', $email);
                 $session->set('codepwd', $uppcode);
-                return $this->redirectToRoute("
-                ");
+                return $this->redirectToRoute("confirmcode");
 
             }
         }

@@ -115,6 +115,6 @@ class __TwigTemplate_4d55e72b3f029a5405560b4a38da97e0 extends Template
 
     </div>
     </div>
-{% endblock %}", "Front-office/Utilisateur/accueil.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\Front-office\\Utilisateur\\accueil.html.twig");
+{% endblock %}", "Front-office/Utilisateur/accueil.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\Front-office\\Utilisateur\\accueil.html.twig");
     }
 }

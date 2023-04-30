@@ -73,6 +73,6 @@ class __TwigTemplate_e4f8a1839a08eaa196b7459c777fbee2 extends Template
         return new Source("{% extends 'base-front.html.twig' %}
 
 
-", "Front-office/Utilisateur/index.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\Front-office\\Utilisateur\\index.html.twig");
+", "Front-office/Utilisateur/index.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\Front-office\\Utilisateur\\index.html.twig");
     }
 }

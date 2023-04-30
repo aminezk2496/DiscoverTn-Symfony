@@ -1130,6 +1130,6 @@ class __TwigTemplate_9950f2e9e2c6acaef444e20b85ac39e4 extends Template
 {% endblock %}
 </body>
 </html>
-", "base-admin.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\base-admin.html.twig");
+", "base-admin.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\base-admin.html.twig");
     }
 }

@@ -657,6 +657,6 @@ class __TwigTemplate_8bd54a3f8cf558b0e73838a3fdd54f3b extends Template
     </div>
 {% endblock %}
 </body>
-</html>", "base-front.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\base-front.html.twig");
+</html>", "base-front.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\base-front.html.twig");
     }
 }

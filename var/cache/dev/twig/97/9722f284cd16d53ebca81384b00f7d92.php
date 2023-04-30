@@ -12,7 +12,7 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* Back-Office/Utilisateur/pdfusersdetails.html.twig */
+/* Back-office/Utilisateur/pdfusersdetails.html.twig */
 class __TwigTemplate_e7577d613bead86839e3930d73095b4d extends Template
 {
     private $source;
@@ -34,10 +34,10 @@ class __TwigTemplate_e7577d613bead86839e3930d73095b4d extends Template
     {
         $macros = $this->macros;
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
-        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "Back-Office/Utilisateur/pdfusersdetails.html.twig"));
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "Back-office/Utilisateur/pdfusersdetails.html.twig"));
 
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
-        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "Back-Office/Utilisateur/pdfusersdetails.html.twig"));
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "Back-office/Utilisateur/pdfusersdetails.html.twig"));
 
         // line 1
         echo "<section class=\"section\">
@@ -128,7 +128,7 @@ class __TwigTemplate_e7577d613bead86839e3930d73095b4d extends Template
 
     public function getTemplateName()
     {
-        return "Back-Office/Utilisateur/pdfusersdetails.html.twig";
+        return "Back-office/Utilisateur/pdfusersdetails.html.twig";
     }
 
     public function isTraitable()
@@ -189,6 +189,6 @@ class __TwigTemplate_e7577d613bead86839e3930d73095b4d extends Template
             </div>
         </div>
     </div>
-</section>", "Back-Office/Utilisateur/pdfusersdetails.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\Back-office\\Utilisateur\\pdfusersdetails.html.twig");
+</section>", "Back-office/Utilisateur/pdfusersdetails.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\Back-office\\Utilisateur\\pdfusersdetails.html.twig");
     }
 }

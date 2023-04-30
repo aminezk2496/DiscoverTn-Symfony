@@ -327,6 +327,6 @@ class __TwigTemplate_746eca9bb35049560dc8500067e863df extends Template
     </div>
 </section>
 </body>
-</html>", "Front-office/Utilisateur/signup.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\Front-office\\Utilisateur\\signup.html.twig");
+</html>", "Front-office/Utilisateur/signup.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\Front-office\\Utilisateur\\signup.html.twig");
     }
 }

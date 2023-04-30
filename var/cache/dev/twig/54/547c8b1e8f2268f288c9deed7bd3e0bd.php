@@ -194,6 +194,6 @@ class __TwigTemplate_93ab6f3ebc631977bc11518276d4cb96 extends Template
         {% block body %}{% endblock %}
     </body>
 </html>
-", "base.html.twig", "C:\\Users\\Amine\\Desktop\\Backup symfony pi\\PI\\discovertn\\templates\\base.html.twig");
+", "base.html.twig", "C:\\Users\\Amine\\Desktop\\Nouveau dossier (7)\\DiscoverTn-Symfony\\templates\\base.html.twig");
     }
 }
