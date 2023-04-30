@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Reservation;
+use App\Service\MailSendr;
 use App\Form\ReservationType;
 use App\Entity\Hebergement;
 //use App\Controller\EntityManagerInterface;
@@ -16,19 +17,61 @@ use DateTimeImmutable;
 use Mixpanel\Mixpanel;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
+
 
 class ReservationController extends AbstractController
 {
     #[Route('/reservation/index', name: 'app_reservation')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
     {
         $reservations = $doctrine->getRepository(Reservation::class)->findAll();
+
+        //pagination
+        $reservations = $paginator->paginate(
+            $reservations, // Les données à paginer
+            $request->query->getInt('page', 1), // Le numéro de la page à afficher
+            5 // Le nombre d'éléments par page
+        );
 
         // Afficher la liste des reser dans la vue
         return $this->render('reservation/view.html.twig', [
             'reservations' => $reservations,
+            //'pagination' => $pagination,
         ]);
     }
+
+    ////////////
+
+    #[Route('/reservation/index2', name: 'app_reser')]
+    public function pagination(){
+                $resultsPerPage = 5;
+                $queryBuilder = $this->getDoctrine()->getRepository(Reservation::class)->createQueryBuilder('r');
+                $queryBuilder->orderBy('r.id', 'DESC');
+                $query = $queryBuilder->getQuery();
+
+        // Récupérer le numéro de page à partir de la requête
+        $currentPage = $request->query->getInt('page', 1);
+
+        // Calculer l'offset
+        $offset = ($currentPage - 1) * $resultsPerPage;
+
+        // Créer une instance du composant Paginator
+        $paginator = new Paginator($query);
+
+        // Définir l'offset et le nombre de résultats par page
+        $paginator->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($resultsPerPage);
+
+        // Récupérer les résultats paginés
+        $results = $paginator->getIterator();
+
+    }
+
+    ////////////
 
     #[Route('/success', name: 'win_reservation')]
     public function success(): Response
@@ -37,10 +80,31 @@ class ReservationController extends AbstractController
         ]);
     }
     
-   
+    
+    ////////////
+
+/*    private function SendMail(?string $email)
+    {
+        $mail = (new Email())
+            ->from('giovannijbakone@gmail.com')
+            ->to($email)
+            ->subject('signaler publication')
+            ->text("Hello,
+We wanted to let you know that a publication has been reported and needs to be reviewed. Additional details are provided below:
+Thank you for your attention to this matter.
+Best regards,
+The Los Devos team"
+);
+ $transport= new GmailSmtpTransport('giovannijbakone@gmail.com','rkxlltjrumnjlnmu');
+        $mailer = new  Mailer($transport);
+
+        $mailer->send($mail);
+    }*/
+
+    ///////////
 
     #[Route('/reservation/add', name: 'add_Reservation')]
-    public function addReservation(Request $req,ManagerRegistry $doctrine, MailerInterface $mailer): Response
+    public function addReservation(Request $req, ManagerRegistry $doctrine,MailSendr $mail): Response
     {
         $reservation = new Reservation();
         $hebergements = new Hebergement();
@@ -52,9 +116,12 @@ class ReservationController extends AbstractController
         
         if($form->isSubmitted() && $form->isValid())
         { 
-           // $this->SendMail($admin,$mailer);
+            // $this->SendMail($admin,$mailer);
             $dateReser = $form->get('dateReser')->getData(); // Récupération de l'objet DateTime soumis
-            $this->SendMail($admin,$mailer);
+            
+            //envois du mail 
+            $mail->sendEmail($admin);
+
             // $dateReserString = $dateReser->format('Y-m-d'); // Conversion de l'objet DateTime en chaîne de caractères au format "AAAA-MM-JJ "
         
             $reservation->setDateReser($dateReser);
@@ -73,6 +140,7 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
             
+            $this->addFlash('success', 'Reservation effectuée');
             return $this->redirectToRoute('app_reservation');
         }
         
@@ -81,21 +149,7 @@ class ReservationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-   
-    private function SendMail(?string $email, MailerInterface $mailer)
-    {
-        $mail = (new Email())
-            ->from('devcompi2023@gmail.com')
-            ->to($email)
-            ->subject('Reservation effectuée')
-            ->text("Hello,
-            your reservation has been registred succesfully.
-
-            Best regards,
-            The Los Devos team"
-);
-        $mailer->send($mail);
-    }
+    
 
     
    

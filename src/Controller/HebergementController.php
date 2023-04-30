@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Hebergement;
 use App\Form\HebergementType;
 use Mixpanel\Mixpanel;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\DataTable;
+
 
 
 class HebergementController extends AbstractController
@@ -57,38 +60,37 @@ class HebergementController extends AbstractController
         ]);
     }
 
+    /////////////
+
     #[Route('/hebergement/stat', name: 'stat_heber')]
-    public function statistiques()
+    public function statistiques(ManagerRegistry $doctrine)
     {
-        $mixpanel = Mixpanel::getInstance("e973aae2e2e2891aad5d0d38ca66b880");
-        $localisation1 = 'Tunis';
-        $localisation2 = 'Sousse';
-        $localisation3 = 'Nabeul';
+        $em = $doctrine->getManager();
+$conn = $em->getConnection();
+$sql = "SELECT localisation_heber, COUNT(*) as count FROM hebergement GROUP BY localisation_heber";
+$stmt = $conn->query($sql);
+//$stmt->execute();
+$data = $stmt->fetchAll();
 
-        $query = [
-            'event' => 'Visite hébergement',
-            'where' => 'properties.localisation == "'.$localisation1.'" || properties.localisation == "'.$localisation2.'" || properties.localisation == "'.$localisation3.'"',
-            'type' => 'general',
-            'unit' => 'day',
-            'interval' => 30,
-            'from_date' => '2022-01-01',
-            'to_date' => '2022-12-31',
-        ];
+$table = [['Localisation','Nombre hébergements']];
+//$table->addColumn('string', 'Localisation');
+//$table->addColumn('number', 'Nombre d\'hébergements');
+foreach ($data as $row) {
+    $table[]=[$row['localisation_heber'], (int)$row['count']];
+}
 
-        $data = $mixpanel->request(['export'], $query);
-        $processedData = array();
-    
-        foreach ($data as $item) {
-        $processedData[] = array(
-            'localisation' => $item['localisation'],
-            'pourcentage' => round($item['nombre'] / $item['total'] * 100, 2)
-        );
+$chart = new PieChart();
+$chart->getData()->setArrayToDataTable($table);
+$chart->getOptions()->setTitle('Statistiques des hébergements par localisation');
+$chart->getOptions()->setHeight(500);
+$chart->getOptions()->setWidth(800);
+
+return $this->render('hebergement/statistiques.html.twig', [
+    'chart' => $chart
+]);
     }
-    
-    // Envoi des données au template
-    return $this->render('stats.html.twig', array(
-        'data' => $processedData
-    ));
-    }
+
+
+    /////////////
 
 }

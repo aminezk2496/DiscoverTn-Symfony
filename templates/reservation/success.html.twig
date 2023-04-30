@@ -1,1 +1,17 @@
-<h1> ACTION REUSSI </h1>
+{% extends 'base-front.html.twig' %}
+
+{% block body %}
+	{% for flash_message in app.session.flashbag.get('success') %}
+
+
+		<div class="notification alert alert-success alert-dismissible fade show">
+
+			{{ flash_message }}
+
+			<span class="notification-close" data-bs-dismiss="alert"></span>
+
+		</div>
+
+
+	{% endfor %}
+{% endblock %}
