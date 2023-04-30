@@ -1,0 +1,29 @@
+
+.fas.fa-heart:hover {
+    color: #f44336 !important;
+}
+
+.fas.fa-share-alt:hover {
+    color: #0d47a1 !important;
+}
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    max-height: 50rem;
+    max-width: 50rem; /* adjust this value to fit your needs */
+    margin: 0 auto;
+}
+.comment-text {
+    font-size: 13px
+}
+
+.wish {
+    color: #35b69f
+}
+
+.user-feed {
+    font-size: 14px;
+    margin-top: 12px
+}

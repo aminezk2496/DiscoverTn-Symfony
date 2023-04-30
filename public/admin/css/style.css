@@ -58,6 +58,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: #012970;
 }
+=.table-container {
+  overflow-y: scroll;
+  max-height: 200px; /* adjust to your needs */
+}
+
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -811,6 +816,35 @@ h1, h2, h3, h4, h5, h6 {
 .dashboard .recent-sales .dataTable-bottom {
   padding: 10px 0 0 0;
 }
+.table-responsive {
+  display: block;
+  overflow-x: auto;
+  padding: 15px;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.table td,
+.table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
 
 /* Top Selling */
 .dashboard .top-selling {

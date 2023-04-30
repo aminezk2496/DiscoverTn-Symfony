@@ -1,0 +1,64 @@
+{% extends 'base-front.html.twig' %}
+
+{% block body %}
+    <div class="shop_top">
+        <div class="container">
+            <div class="form-wrapper">
+                <h1 class="card-title">Ajouter un Evenement</h1>
+                {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+                <table>
+                    <tr>
+                        <td>
+                            {{ form_label(form.titreEvenement,"Titre : ") }}
+                        </td><td>
+                            {{ form_widget(form.titreEvenement, {'attr': {'class': 'form-widg'}}) }}
+                        </td>
+                        <td>{{ form_errors(form.titreEvenement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form_label(form.lieuEvenement,"lieu : ") }}
+                        </td><td>
+                            {{ form_widget(form.lieuEvenement,{'attr': {'class': 'form-widg'}}) }}
+                        </td>
+                        <td>{{ form_errors(form.lieuEvenement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form_label(form.typeEvenement,"Type : ") }}
+                        </td><td>
+                            {{ form_widget(form.typeEvenement,{'attr': {'class': 'form-widg'}}) }}
+                        </td>
+                        <td>{{ form_errors(form.typeEvenement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form_label(form.descriptionEvenement,"Description : ") }}
+                        </td><td>
+                            {{ form_widget(form.descriptionEvenement,{'attr': {'class': 'form-widg'}}) }}
+                        </td>
+                        <td>{{ form_errors(form.descriptionEvenement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form_label(form.dateEvenement,"Date : ") }}
+                        </td><td>
+                            {{ form_widget(form.dateEvenement) }}
+                        </td>
+                        <td>{{ form_errors(form.dateEvenement) }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form_label(form.imageFile,"Image : ") }}
+                        </td><td>
+                            {{ form_widget(form.imageFile,{'attr': {'class': 'form-img-up'}}) }}
+                        </td>
+                        <td>{{ form_errors(form.imageFile) }}</td>
+                    </tr>
+                </table>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publication index
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div
+							class="card-body">
+							<!-- Table with stripped rows -->
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Contenu</th>
+										<th>Iduser</th>
+										<th>Urlimage</th>
+										<th>DatePublication</th>
+										<th>actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for publication in publications %}
+										<tr>
+											<td>{{ publication.id }}</td>
+											<td>{{ publication.contenu }}</td>
+											<td>{{ publication.iduser }}</td>
+											<td>{{ publication.urlimage }}</td>
+											<td>{{ publication.datePublication ? publication.datePublication|date('Y-m-d') : '' }}</td>
+											<td>
+												<a href="{{ path('app_publication_show', {'id': publication.id}) }}">show</a>
+												<a href="{{ path('app_publication_edit', {'id': publication.id}) }}">edit</a>
+											</td>
+										</tr>
+
+									{% endfor %}
+								</tbody>
+							</table>
+							{{ knp_pagination_render(publications) }}
+							<!-- End Table with stripped rows -->
+							<button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('app_publication_new') }}'">Create new</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<!-- End #main -->
+
+
+	<a href="{{ path('app_publication_new') }}">Create new</a>
+{% endblock %}

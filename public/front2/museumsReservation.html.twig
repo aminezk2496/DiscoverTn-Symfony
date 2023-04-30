@@ -1,0 +1,28 @@
+{% extends 'base-front1.html.twig' %}
+
+{% block title %}New ReservationHotel{% endblock %}
+
+{% block Museum %}
+    <div class="content-body h-100 row align-items-center center" style="height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;" >
+
+        <div class="col text-center center" style="width: 20vw;" >
+            <h4>BOOK A TICKET</h4>
+            <div class="">
+
+
+                <div class="" id="t">
+
+
+                    {{ include('front/formReservation.html.twig') }}
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

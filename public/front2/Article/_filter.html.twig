@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+<div class="col-xs-6">
+
+{{ form_row(form.q) }}
+</div>
+<div class="col-xs-6 flex-row" >
+    {{ form_row(form.categories) }}
+
+</div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-block w-60"> Filter</button>
+    </div>
+
+
+{{ form_end(form) }}

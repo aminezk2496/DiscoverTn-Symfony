@@ -1,0 +1,73 @@
+{% extends 'base-front.html.twig' %}
+{% block title %} Blog {% endblock %}
+{% block body %}
+    <div class="container" style="margin-top: 20px;">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+        <div class="row">
+            <div class="row jumbotron">
+                    {% include 'front/Article/_filter.html.twig'with {form:form} only %}
+            </div>
+            <div class="col-xs-6">
+        <h3>BLOG</h3>
+            </div>
+            <div class="col-xs-6">
+                <div class="text-right">
+                    <a href="{{ path("article.new") }}" class="btn btn-primary">Créer un nouveau article</a>
+                </div>
+            </div>
+
+        </div>
+    <div class="grid row">
+        {% for article in articles %}
+
+        <div class="grid-item col-md-6 ">
+            <article class="post">
+                <figure class="feature-image">
+                    <a href="{{ path('article.show',{id:article.idArticle,slug:article.slug}) }}">
+                        <img src="{{"http:\\\\localhost\\"~article.imageArticle| slice(16) }}"  alt="image" style="width:60%; height: auto;">
+                    </a>
+                </figure>
+                <div class="entry-content">
+                    <div class="entry-meta">
+
+                     <span class="byline">
+                         <a href="#">{{ article.categorie.nomCategorie }}</a>
+                     </span>
+                     </div>
+                    <h3>
+                        <a href="{{ path('article.show',{id:article.idArticle,slug:article.slug}) }}">{{ article.titreArticle }}</a>
+                    </h3>
+                    <div class="entry-meta">
+                                          <span class="byline">
+                                             <a href="#">{{ article.utilisateur.prenomUtilisateur }} {{ article.utilisateur.nomUtilisateur }}</a>
+                                          </span>
+                        <span class="posted-on">
+                                             <a href="#">{{ article.dateArticle|date("m-d-Y H:i","Europe/Paris")  }}</a>
+                                          </span>
+                        <span class="comments-link">
+                                             <a href="#">No Comments</a>
+                                          </span>
+                    </div>
+
+                    <p>{{ article.descriptionArticle | length > 50 ? article.descriptionArticle|slice(0, 200) ~ '...' : article.descriptionArticle}}</p>
+                    <a href="{{ path('article.show',{id:article.idArticle,slug:article.slug}) }}" class="button-text"> LIRE LA SUITE..</a>
+                </div>
+            </article>
+        </div>
+{% endfor %}
+
+    </div>
+
+    </div>
+<div class="text-center">
+    {{ knp_pagination_render(articles) }}
+</div>
+
+
+{% endblock %}

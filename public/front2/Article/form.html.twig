@@ -1,0 +1,13 @@
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}})}}
+<div class="row">
+    <div class="col-md-4"> {{ form_row(form.titreArticle) }}</div>
+</div>
+<div class="row mt-2">
+    <div class="col-md-6">{{ form_row(form.descriptionArticle) }}</div>
+</div>
+{{ form_widget(form) }}
+<div class="row mt-2" style="margin-top: 60px;">
+    <div class="col-md-6">{{ form_row(form.captchaCode) }}</div>
+</div>
+<button class="btn btn-primary mt-2">{{ button | default("Enregistrer") }}</button>
+{{ form_end(form) }}
