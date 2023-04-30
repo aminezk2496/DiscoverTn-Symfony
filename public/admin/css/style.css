@@ -58,10 +58,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: #012970;
 }
-.table-container {
+=.table-container {
   overflow-y: scroll;
   max-height: 200px; /* adjust to your needs */
 }
+
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -842,6 +844,7 @@ h1, h2, h3, h4, h5, h6 {
 .table tbody + tbody {
   border-top: 2px solid #dee2e6;
 }
+
 
 /* Top Selling */
 .dashboard .top-selling {
