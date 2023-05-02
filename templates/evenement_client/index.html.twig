@@ -1,0 +1,115 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <br>
+    <h3>Liste des Evenements</h3>
+    
+   {% for flashMessage in app.flashes('msg') %}
+        <div class="alert alert-success" role="alert" style="text-align: center;">
+        {{ flashMessage }}
+        </div>
+    {% endfor %}
+    
+
+    <div class="row">
+    {% for evenement in pagination %}
+        <div class="col-md-4" >
+            <div class="card" >
+                <img src="{{ evenement.imageEvent}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ evenement.titreEvent }}</h5>
+                    <hr>
+                    <spam style="font-size: 11px;">{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }} au {{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</spam>
+                    <br><spam><b style="font-size: 11px;">{{ evenement.prixEvent }} TND</b></spam>
+                    <br><spam class="card-text" style="font-size: 10px;">{{ evenement.descEvent }}</spamp>
+                    <br><br><a href="{{ path('app_evenement_client_show', {'idEvent': evenement.idEvent}) }}" class="btn btn-info">Afficher plus</a>
+                    <a href="{{ path('app_evenement_client_participer', {'idEvent': evenement.idEvent}) }}" class="btn btn-success">Participer</a>
+                </div>
+            </div>
+        </div>
+           
+    {% endfor %}
+    </div>
+    {{ knp_pagination_render(pagination) }}
+     <style>
+
+    .pagination {
+        text-align: center!important;
+        display: block!important;
+    }
+    .pagination span{
+        padding: 10px!important;
+        background: #0d6efd!important;
+        color: #fff!important;
+        margin: 10px!important;
+        border-radius: 8px!important;
+    }
+    .pagination span a{
+        color: #fff!important;
+    }
+    .pagination .current{
+        background: #dc3545!important;
+    }
+    </style>
+    <!--<table class="table">
+        <thead>
+            <tr>
+                <th>IdEvent</th>
+                <th>TitreEvent</th>
+                <th>DateDebutEvent</th>
+                <th>DateFinEvent</th>
+                <th>PrixEvent</th>
+                <th>LieuEvent</th>
+                <th>DescEvent</th>
+                <th>ImageEvent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in pagination %}
+            <tr>
+                <td>{{ evenement.idEvent }}</td>
+                <td>{{ evenement.titreEvent }}</td>
+                <td>{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.prixEvent }}</td>
+                <td>{{ evenement.lieuEvent }}</td>
+                <td>{{ evenement.descEvent }}</td>
+                <td>{{ evenement.imageEvent }}</td>
+                <td>
+                    <a href="{{ path('app_evenement_client_show', {'idEvent': evenement.idEvent}) }}">show</a>
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>-->
+
+   <style>
+   .card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    margin-bottom: 10px;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+   </style>
+{% endblock %}

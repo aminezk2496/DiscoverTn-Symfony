@@ -1,0 +1,50 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdEvent</th>
+                <td>{{ evenement.idEvent }}</td>
+            </tr>
+            <tr>
+                <th>TitreEvent</th>
+                <td>{{ evenement.titreEvent }}</td>
+            </tr>
+            <tr>
+                <th>DateDebutEvent</th>
+                <td>{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFinEvent</th>
+                <td>{{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PrixEvent</th>
+                <td>{{ evenement.prixEvent }}</td>
+            </tr>
+            <tr>
+                <th>LieuEvent</th>
+                <td>{{ evenement.lieuEvent }}</td>
+            </tr>
+            <tr>
+                <th>DescEvent</th>
+                <td>{{ evenement.descEvent }}</td>
+            </tr>
+            <tr>
+                <th>ImageEvent</th>
+                <td><img src="{{ evenement.imageEvent}}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a  class="btn btn-primary" role="button" href="{{ path('app_evenement_client_index') }}">back to list</a>
+
+   
+
+    {{ include('evenement_client/_delete_form.html.twig') }}
+{% endblock %}

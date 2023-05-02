@@ -1,0 +1,70 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Participation index{% endblock %}
+
+{% block body %}
+    <h1>Liste Participation </h1>
+
+    <table class="table">
+        <thead>
+             <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Event</th>
+                <th>Date </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in pagination %}
+            <tr>
+                {% for participation in pagination %}
+                <tr>
+                    <td>{{ participation.idParti  }}</td>
+                    <td>{{ participation.idUtilisateur.nomUtilisateur }} {{ participation.idUtilisateur.prenomUtilisateur }}</td>
+                    <td>{{ participation.idEvenement.titreEvent}}</td>
+                    <td>{{ participation.dateParti|date('Y-m-d H:i:s') }}</td>
+                    <td>
+                    {% if participation.status == 0 %}
+                         <a  href="{{ path('app_participation_client_status', {'idPart': participation.idParti,'status':1 }) }}" class="btn btn-primary">Accepter</a>
+                         <a  href="{{ path('app_participation_client_status', {'idPart': participation.idParti,'status':2 }) }}" class="btn btn-danger">Annuler</a>
+                    {% endif %}
+                    {% if participation.status == 1 %}
+                        <b style="color:#16c60c">✅Accepter</b>
+                    {% endif %}
+                    {% if participation.status == 2 %}
+                        <b style="color:#ed1c24">❌Annuler</b>
+                    {% endif %}
+                    </td>
+                   
+                </tr>
+            {% endfor %}
+            
+            </tr>
+       
+        {% endfor %}
+        </tbody>
+    </table>
+   {{ knp_pagination_render(pagination) }}
+    <style>
+
+    .pagination {
+        text-align: center!important;
+        display: block!important;
+    }
+    .pagination span{
+        padding: 10px!important;
+        background: #0d6efd!important;
+        color: #fff!important;
+        margin: 10px!important;
+        border-radius: 8px!important;
+    }
+    .pagination span a{
+        color: #fff!important;
+    }
+    .pagination .current{
+        background: #dc3545!important;
+    }
+    </style>
+    
+{% endblock %}
