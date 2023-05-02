@@ -93,10 +93,10 @@ try {
     public function sendEmail(string $name,\DateTime $dateAsString,float $Prix,string $lieux): Response
 {
     { $Date = $dateAsString->format('Y-m-d');
-        $transport = Transport::fromDsn('smtp://discovertn6@gmail.com:twxtgmrhhurekoud@smtp.gmail.com:587');
+        $transport = Transport::fromDsn('smtp://rihem.drissi@esprit.tn:qnerkiajcikwckjj@smtp.gmail.com:587');
         $mailer = new Mailer($transport);
         $email = (new Email());
-        $email->from('discovertn6@gmail.com');
+        $email->from('rihem.drissi@esprit.tn');
         $email->to('rihem.dsi@gmail.com');
         $email->subject(sprintf(' Participation à %s le %s', $name, $Date ));
         $email->text(sprintf('vous avez participé à %s le %s.', $name, $Date));
