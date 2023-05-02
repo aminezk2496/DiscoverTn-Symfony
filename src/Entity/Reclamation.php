@@ -25,6 +25,8 @@ class Reclamation
      */
     private $idReclamation;
 
+
+
     /**
      * @var string|null
      *
@@ -140,6 +142,17 @@ class Reclamation
     public function setIdUtilisateur(int $idUtilisateur): self
     {
         $this->idUtilisateur = $idUtilisateur;
+
+        return $this;
+    }
+    public function getUtilisateur(): ?int
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

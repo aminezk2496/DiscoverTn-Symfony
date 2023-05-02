@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Locations</title>
+</head>
+<body>
+    <h1>Locations</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>nom</th>
+                <th>Type</th>
+                <th>lieu</th>
+                <th>numtel</th>
+                                <th>heure</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for location in locations %}
+                <tr>
+                    <td>{{ location.id }}</td>
+                    <td>{{ location.nom }}</td>
+                    <td>{{ location.type }}</td>
+                    <td>{{ location.lieu }}</td>
+                    <td>{{ location.numtel }}</td>
+                    <td>{{ location.heure }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

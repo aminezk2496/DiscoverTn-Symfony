@@ -1,0 +1,119 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Camping{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {background-color: #f5f5f5;}
+        .delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Set hover style for delete button */
+.delete-btn:hover {
+  background-color: #da190b;
+}
+a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3e8e41;
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1> Camping</h1>
+
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Nom</th>
+                <td>{{ camping.nom }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ camping.dateDebut ? camping.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ camping.dateFin ? camping.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Periode</th>
+                <td>{{ camping.periode }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ camping.prix }}</td>
+            </tr>
+            <tr>
+                <th>Lieux</th>
+                <td>{{ camping.lieux }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ camping.description }}</td>
+            </tr>
+            <tr>
+                <th>Imagec</th>
+                <td><img class="card-img-top" src="{{ camping.imagec }}" ></td>
+            </tr>
+            <tr>
+                <th>Nbr_place</th>
+                <td>{{ camping.nbrPlace }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_camping_index') }}">back to list</a>
+
+    <a href="{{ path('app_camping_edit', {'idCamping': camping.idCamping}) }}">edit</a>
+
+    {{ include('camping/_delete_form.html.twig') }}</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+{% endblock %}

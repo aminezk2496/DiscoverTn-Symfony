@@ -1,0 +1,62 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <main id="main" class="main">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div
+                                class="card-body">
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Titre Evenement</th>
+                <td>{{ evenement.titreEvent }}</td>
+            </tr>
+            <tr>
+                <th>Date Debut</th>
+                <td>{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date Fin </th>
+                <td>{{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prix </th>
+                <td>{{ evenement.prixEvent }}</td>
+            </tr>
+            <tr>
+                <th>Lieu Evnt</th>
+                <td>{{ evenement.lieuEvent }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.descEvent }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ evenement.imageEvent}}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" role="button" href="{{ path('app_evenement_admin_index') }}">Routeur à la liste</a>
+
+  <!--  <a class="btn btn-primary" role="button" href="{{ path('app_evenement_admin_edit', {'idEvent': evenement.idEvent}) }}">edit</a> -->
+
+    {{ include('evenement_admin/_delete_form.html.twig') }}
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+    </main>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base-admin.html.twig' %}
+
+
+
+
+{% block title %}Hello EvenementController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+    <main id="main" class="main">
+    <form>
+    <input type="text" name="marque">
+        <input type="submit" name="recherche">
+ <label for="sort">Sort by:</label>
+        <select name="sort" id="sort">
+            <option value="id">ID</option>
+            <option value="marque">Marque</option>
+            <option value="type">Type</option>
+            <option value="nb_chv">Nb chv</option>
+            <option value="serie">Série</option>
+        </select>
+    </form>
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Table with stripped rows -->
+                            <table class="table">
+                                <thead>
+                                <tr>
+      <th scope="col">ID</th>
+      <th scope="col">marque</th>
+      <th scope="col">type</th>
+      <th scope="col">nb_chv</th>
+      <th scope="col">serie</th>
+    </tr>
+                                </thead>
+                                <tbody>
+                                {% for data in List %}
+                                    <tr>
+      <th scope="row">{{data.id}}</th>
+      <td>{{data.marque}}</td>
+      <td>{{data.type}}</td>
+      <td>{{data.nbchv}}</td>
+      <td>{{data.serie}}</td>
+      
+      <td><button type="button" class="btn btn-warning"><a style="color: #fff" href="{{ path('updatevoiture',{'id':data.id}) }}">update</a></button></td>
+     <td><button type="button" class="btn btn-danger"><a style="color: #fff" href="{{ path('deletevoiture',{'id':data.id}) }}">Supprimer</a></button></td>
+       </tr>
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                            <a href="{{ path('voiture_pdf') }}">Download PDF</a>
+                            <a href="{{ path('voiture_csv') }}" class="btn btn-primary">Export CSV</a>
+
+                           
+
+
+
+                            <!-- End Table with stripped rows -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+
+{% endblock %}

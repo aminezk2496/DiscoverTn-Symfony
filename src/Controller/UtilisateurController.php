@@ -53,10 +53,10 @@ class UtilisateurController extends AbstractController
 
         if ($session->has('user')) {
             $user1 = $this->getDataUserConnected($session);
-            if ($user1->getRankUtilisateur() == "1") {
-
+            if ($user1->getRankUtilisateur() == 1 || $user1->getRankUtilisateur() == 2) {
                 return $this->redirectToRoute("UsersHome");
             }
+
 
         }
         $user = new Utilisateur();
@@ -566,7 +566,7 @@ class UtilisateurController extends AbstractController
             );
 
 
-            if ($this->getRank($session) == 1) {
+            if ($this->getRank($session) == 1||$this->getRank($session) == 2) {
                 return $this->render('Back-Office/Utilisateur/index.html.twig', [
                     'users' => $users, 'user' => $user
                 ]);            } else {

@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+        
+        <div class="form-group">
+            {{ form_label(form.titreEvent, 'Titre') }}
+            {{ form_widget(form.titreEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.titreEvent) }}
+        </div>
+        <br>
+         <div class="form-group">
+            {{ form_label(form.idEvenementType, 'Type') }}
+            {{ form_widget(form.idEvenementType, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.idEvenementType) }}
+        </div><br>
+        <div class="form-group">
+           {{ form_label(form.dateDebutEvent, 'Date debut') }}
+            {{ form_widget(form.dateDebutEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateDebutEvent) }}
+        </div><br>
+         <div class="form-group">
+            {{ form_label(form.dateFinEvent, 'Date fin') }}
+            {{ form_widget(form.dateFinEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateFinEvent) }}
+        </div><br>
+        <div class="form-group">
+            {{ form_label(form.prixEvent, 'Prix Evenement') }}
+            {{ form_widget(form.prixEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.prixEvent) }}
+        </div><br>
+         <div class="form-group">
+            {{ form_label(form.lieuEvent, 'Lieu') }}
+            {{ form_widget(form.lieuEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.lieuEvent) }}
+        </div><br>
+        <div class="form-group">
+            {{ form_label(form.descEvent, 'Description') }}
+            {{ form_widget(form.descEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.descEvent) }}
+        </div><br>
+        <div class="form-group">
+            {{ form_label(form.imageEvent, 'Image') }}
+            {{ form_widget(form.imageEvent, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.imageEvent) }}
+        </div><br>
+        
+        
+{{ form_row(form.save) }}
+
+  
+{{ form_end(form) }}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voitures</title>
+</head>
+<body>
+    <h1>Voitures</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marque</th>
+                <th>Type</th>
+                <th>Nb chv</th>
+                <th>Série</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voiture in voitures %}
+                <tr>
+                    <td>{{ voiture.id }}</td>
+                    <td>{{ voiture.marque }}</td>
+                    <td>{{ voiture.type }}</td>
+                    <td>{{ voiture.nbchv }}</td>
+                    <td>{{ voiture.serie }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

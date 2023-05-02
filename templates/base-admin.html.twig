@@ -278,8 +278,10 @@
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
+                        <a class="nav-link " href="{{ path('app_evenement_admin_index') }}">
                             <i class="bi bi-circle"></i><span>Gérer Evenements</span>
                         </a>
+                        <a class="nav-link " href="{{ path('app_participation') }}">
                             <i class="bi bi-circle"></i><span>Gérer Reservations Evenements</span>
                     </a>
                     </li>
@@ -312,27 +314,32 @@
                 </a>
                 <ul id="blogs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                            <i class="bi bi-circle"></i><span>Gérer les articles</span>
+                        <a href="{{ path('app_publication_index') }}">
+                            <i class="bi bi-circle"></i><span>Gérer les publications</span>
                         </a>
                     </li>
-                    <li>
-                        </a>
-                    </li>
-                    <li>
-                            <i class="bi bi-circle"></i><span>Gérer les commentaires</span>
-                        </a>
-                    </li>
+
+
                 </ul>
             </li><!-- End blogs Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#Hotels-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Hotels</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-menu-button-wide"></i><span>Hebergements</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="Hotels-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                            <i class="bi bi-circle"></i><span>Gérer Hotels</span>
+                        <a href="{{ path('add_Hebergement') }}">
+                        <i class="bi bi-circle"></i><span>Ajouter Hebergements</span>
                         </a>
                     </li>
+                </ul>
+                <ul id="Hotels-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ path('stat_heber') }}">
+                            <i class="bi bi-circle"></i><span>Statistiques Hebergements</span>
+                        </a>
+                    </li>
+
                 </ul>
             </li><!-- End Utilisateurs Nav -->
             <li class="nav-item">

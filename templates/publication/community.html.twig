@@ -1,0 +1,327 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Commentaire index
+{% endblock %}
+
+{% block body %}
+
+    <main>
+        <a href="{{ path('app_publication_show1') }}" class="btn btn-outline-dark btn-sm ml-2">Back to List</a>
+
+        <div class="section d-flex justify-content-center align-items-center">
+            <div class="card mb-4" style="width: 100%; max-width: 50rem;">
+                <div class="card-body d-flex flex-row">
+                    {% for u in users %}
+                        {%if u.loginUtilisateur==publication.iduser %}
+                            <img class="card-user avatar avatar-large" src="{{"http:\\\\localhost\\"~u.imageUtilisateur| slice(16) }}" alt="Profile" style="width:50px ; border-radius: 50%" class="rounded-circle">
+                        {% endif %}
+                    {% endfor %}
+                    <div>
+
+                        <h5 class="card-title mb-0">{{ publication.iduser }}</h5>
+                        <p class="card-text"><i class="far fa-clock pe-2"></i>{{ publication.datePublication|date('m/d/Y') }}</p>
+
+
+                        <div class="menu-nav ml-auto">
+                            <div class="dropdown-container" tabindex="-1">
+                                <div class="three-dots"></div>
+                                <div class="dropdown">
+                                    <a href="{{ path('app_publication_edit', {'id': publication.id}) }}"><div>edit</div></a>
+                                    <a href="{{ path('app_publication_signaler', {'id': publication.id}) }}"><div>signaler</div></a>
+                                    {% if user.loginUtilisateur == publication.iduser %}
+
+                                    <button type="button" class="btn btn-danger float-right" onclick="deletePublication({{ publication.id }})">Delete</button>
+                                {% endif%}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                    <h2 class="mb-3">{{ publication.contenu }}</h2>
+                    <img class="img-fluid" src="{{ "http:\\\\localhost\\"~publication.urlimage| slice(16) }}" alt="Card image cap" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+
+                                    <form id="comment-form">
+                                        <h5 class="card-title mb-3">Leave a Comment</h5>
+                                        {{ form_start(form,{'attr': {'novalidate': 'novalidate', 'class': 'comment-form'}}) }}
+                                        {{ form_widget(form.contenu, {'attr': {'class': 'form-control mb-3 comment-input', 'style': 'font-size: smaller;' }}) }}
+                                        <button type="submit" class="btn btn-primary" id="commentaire_Submit">Submit</button>
+                                        {{ form_end(form) }}
+                                    </form>
+
+                    <div class="comment-section">
+                        {% for commentaire in commentaires %}
+                            {% if commentaire.getPublication==publication.id %}
+                                <div class="card comment-card">
+                                    <div class="d-flex flex-row p-3">
+                                        {% for u in users %}
+                                        {%if u.loginUtilisateur==commentaire.iduser %}
+                                        <img src="{{"http:\\\\localhost\\"~u.imageUtilisateur| slice(16) }}" alt="Profile" style="width:50px ; border-radius: 50%" width="40" height="40" class="rounded-circle mr-3">
+                                       {% endif %}
+                                        {% endfor %}
+                                        <div class="w-100">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <span class="mr-2"><td>{{ commentaire.iduser }}</td></span>
+                                                </div>
+                                                <p class="text-justify comment-text mb-0">{{ commentaire.contenu }}</p>
+                                                  {% if user.loginUtilisateur == commentaire.iduser %}
+
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger float-right" onclick="deleteCommentaire({{ commentaire.id }})">Delete</button>
+
+
+                                                    </td>
+                                                   {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </main>
+    <style>.dropdown-container {
+            position: absolute;
+        }
+        /* CSS for the card */
+        .card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin: 20px auto;
+            max-width: 50rem;
+            width: 100%;
+        }
+
+        /* CSS for the card title */
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* CSS for the card body */
+        .card-body {
+            padding: 20px;
+        }
+        /* CSS for the user image */
+        .card-body img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* CSS for the username */
+        .card-body .card-title {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+
+        /* CSS for the image */
+        .img-fluid {
+            max-width: 100%;
+        }
+        .container.mt-5.mb-5 {
+            height: calc(100% - 200px);
+        }
+
+        /* CSS for the form */
+        #comment-form {
+            margin-top: 20px;
+        }
+
+        /* CSS for the submit button */
+        #commentaire_Submit {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #commentaire_Submit:hover {
+            background-color: #0069d9;
+        }
+
+        /* CSS for the comment */
+        .comment-text {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .three-dots {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #777;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 25px;
+            left: auto;
+            right: 5px;
+            display: none;
+            min-width: 100px;
+            z-index: 10;
+            background-color: #5c8bbb;
+            border: 1px solid #777;
+            border-radius: 4px;
+        }
+
+        .dropdown a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f5f5f5;
+        }.comment-form {
+             border: none;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+             padding: 20px;
+             border-radius: 5px;
+             background-color: #f9f9f9;
+             margin-bottom: 40px;
+         }
+
+        .comment-input {
+            border-radius: 20px;
+            border: none;
+            background-color: #ffffff;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .comment-card {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .comment-card img {
+            border-radius: 50%;
+        }
+
+        .comment-text {
+            font-size: 16px;
+            color: #666666;
+            line-height: 1.5;
+        }
+
+
+        .dropdown-container:focus-within .dropdown {
+            display: block;
+        }
+    </style>
+    <script>
+        // Listen to the click event on the submit button
+        document.getElementById('commentaire_Submit').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get the form data
+            var formData = new FormData(document.getElementById('comment-form'));
+
+            // Send an AJAX request to submit the form data
+            fetch('{{ path('app_commentaire_new', {'id': publication.id}) }}', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Comment submitted successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to submit comment!');
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred while submitting the comment!');
+                    console.error(error);
+                });
+        });
+
+        function deleteCommentaire(id) {
+            if (confirm('Are you sure you want to delete this comment?')) {
+                fetch('{{ path('app_commentaire_delete_ajax', {'id': 0}) }}'.replace('0', id), {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the comment row from the HTML table
+                            const commentRow = document.getElementById('comment-' + id);
+                            if (commentRow) {
+                                commentRow.remove();
+                            }
+                            // Reload the page
+                            location.reload();
+                        } else {
+                            alert('Failed to delete comment!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting comment:', error);
+                        alert('Failed to delete comment due to an error!');
+                    });
+            }
+        }
+        function deletePublication(id) {
+            if (confirm('Are you sure you want to delete this post?')) {
+                fetch('{{ path('app_publication_delete_ajax', {'id': 0}) }}'.replace('0', id), {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the comment row from the HTML table
+                            const commentRow = document.getElementById('comment-' + id);
+                            if (commentRow) {
+                                commentRow.remove();
+                            }
+                            // Reload the page and redirect to app_publication_show1
+                            location.reload();
+                            window.location.href = '{{ path('app_publication_show1', {'id': 0}) }}'.replace('0', id);
+                        } else {
+                            alert('Failed to delete post!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting post:', error);
+                        alert('Failed to delete post due to an error!');
+                    });
+            }
+        }
+
+
+    </script>
+
+
+
+
+
+{% endblock  %}

@@ -1,0 +1,63 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Evenement {% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div
+                            class="card-body">
+    <h1>Evenement </h1>
+    <a class="btn btn-primary" role="button" href="{{ path('app_evenement_admin_new') }}" style="float: right;position: relative;right: 24px;top: -22px;">Ajouter Evenement</a>
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>Titre Evenement</th>
+                <th>Date Debut</th>
+                <th>Date Fin</th>
+                <th>Prix </th>
+                <th>Lieu</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+               
+                <td>{{ evenement.titreEvent }}</td>
+                <td>{{ evenement.dateDebutEvent ? evenement.dateDebutEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.dateFinEvent ? evenement.dateFinEvent|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ evenement.prixEvent }}</td>
+                <td>{{ evenement.lieuEvent }}</td>
+                <td>{{ evenement.descEvent }}</td>
+                <td><img src="{{ evenement.imageEvent}} " style="width: 109px;" ></td>
+                <td style="width: 109px;">
+                    <a class="btn btn-outline-info" role="button" href="{{ path('app_evenement_admin_show', {'idEvent': evenement.idEvent}) }}"><i class="bi-eye-fill"></i></a>
+                    <a class="btn btn-outline-success" role="button" href="{{ path('app_evenement_admin_edit', {'idEvent': evenement.idEvent}) }}"><i class="bi bi-pencil-square"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+   
+
+    
+{% endblock %}
