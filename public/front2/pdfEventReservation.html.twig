@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Reservation</title>
+    <style>
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin: auto;
+            width: 500px;
+        }
+        .our-logo {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            width: 100px;
+        }
+        .reaservation-headline h2 {
+            font-family: sans-serif;
+            width: fit-content;
+            margin: 70px auto;
+            border: 2px solid #000;
+            padding: 10px;
+        }
+        .informations p {
+            font-size: 21px;
+        }
+        .validation img {
+            width: 100px;
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img class="our-logo"
+            src="kisspng-youtube-logo-computer-icons-subscribe-5ab9e84428f427.0158709215221330601678.jpg"
+            alt="" />
+    <div class="reaservation-headline">
+        <h2>Fiche De Reservation</h2>
+    </div>
+</header>
+<main>
+    <section class="informations">
+        <div class="container">
+            <p>
+                Mr/Mrs {{ user.prenomUtilisateur}} {{ user.nomUtilisateur}} we want to inform you that your reservation of the event {{ event.titreEvenement }}
+                has been validated :D
+            </p>
+            <p>
+                This is an evidence of your reservation you have to bring it with u
+                in case of an interal issue
+            </p>
+            <p>
+                In the name of Devers-Team we salute you, and you are more than
+                welcome
+            </p>
+        </div>
+    </section>
+    <section class="validation">
+        <img src="stamp.PNG" alt="" />
+    </section>
+</main>
+</body>
+</html>

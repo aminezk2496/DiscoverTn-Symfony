@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base-front.html.twig' %}
+=======
+{% extends 'basefront.html.twig' %}
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 
 {% block title %}Commentaire index
 {% endblock %}
@@ -23,6 +27,7 @@
         </head>
         <div class="row">
             <div class="col-md-12">
+<<<<<<< HEAD
                 <form id="search-form" class="form-inline my-2 my-lg-0">
                     <div class="form-group mr-sm-2">
                         <input type="text" id="search-input" class="form-control" placeholder="Search...">
@@ -32,6 +37,15 @@
             </div>
         </div>
 
+=======
+                <form id="search-form">
+                    <div class="form-group">
+                        <input type="text" id="search-input" class="form-control" placeholder="Search...">
+                    </div>
+                </form>
+            </div>
+        </div>
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
         <div class="wrapper-grey padded">
             <div class="container">
                 <h2 class="text-center">Community</h2>
@@ -43,11 +57,15 @@
                             <div class="card-description">
                                 <h2>{{ publication.contenu }}</h2>
                             </div>
+<<<<<<< HEAD
                             {% for u in users %}
                             {%if u.loginUtilisateur==publication.iduser %}
                             <img class="card-user avatar avatar-large" src="{{"http:\\\\localhost\\"~u.imageUtilisateur| slice(16) }}" alt="Profile" style="width:50px ; border-radius: 50%" class="rounded-circle">
                             {% endif %}
                             {% endfor %}
+=======
+                            <img class="card-user avatar avatar-large" src="/admin/img/profile-img.jpg">
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
                             <a class="card-link" href="{{ path('app_publication_community', {'id': publication.id}) }}"></a>
                         </div>
                     </div>
@@ -87,6 +105,7 @@
             });
         });
     </script>
+<<<<<<< HEAD
     <style>
         #search-input {
             width: 300px;
@@ -118,6 +137,8 @@
         }
 
     </style>
+=======
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 
 
 

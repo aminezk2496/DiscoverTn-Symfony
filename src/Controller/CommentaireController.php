@@ -4,15 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Commentaire;
 use App\Entity\Publication;
+<<<<<<< HEAD
 use App\Controller\UtilisateurController;
 
+=======
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Repository\PublicationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+=======
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -34,10 +40,15 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/{id}/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
+<<<<<<< HEAD
     public function new(Request $request, $id,SessionInterface $session, CommentaireRepository $commentaireRepository, PublicationRepository $publicationRepository): JsonResponse    {
         $com = new Commentaire();
         $utilisateurController = new UtilisateurController();
         $user=$utilisateurController->getDataUserConnected($session);
+=======
+    public function new(Request $request, $id, CommentaireRepository $commentaireRepository, PublicationRepository $publicationRepository): JsonResponse    {
+        $com = new Commentaire();
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
         $form = $this->createForm(CommentaireType::class, $com);
         $form->handleRequest($request);
         $pub = $publicationRepository->find($id);
@@ -45,7 +56,12 @@ class CommentaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $com->setContenu($this->badwords($com->getContenu()));
             $com->setPublication($pub);
+<<<<<<< HEAD
             $com->setIduser($user->getLoginUtilisateur());            $commentaireRepository->save($com, true);
+=======
+            $com->setIduser('test123');
+            $commentaireRepository->save($com, true);
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 
             // Return a JSON response indicating success
             return new JsonResponse(['success' => true]);
@@ -83,17 +99,24 @@ class CommentaireController extends AbstractController
         ]);
     }
 
+<<<<<<< HEAD
     #[Route('/{id}/edit', name: 'edit_comment', methods: ['GET', 'POST'])]
+=======
+    #[Route('/{id}/edit', name: 'app_commentaire_edit', methods: ['GET', 'POST'])]
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
     public function edit(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): JsonResponse
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< HEAD
             $commentaire->setIduser($commentaire->getIduser());
             $commentaire->setPublication($commentaire->getPublication());
 
 
+=======
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
             $commentaireRepository->save($commentaire, true);
 
             return new JsonResponse(['success' => true]);

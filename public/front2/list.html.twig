@@ -1,0 +1,81 @@
+{% extends 'base-front1.html.twig' %}
+
+{% block title %}Hello FrontController!{% endblock %}
+
+{% block Museum %}
+    <div class="content-body">
+        <div class="container page">
+            <div class="row">
+                <div class="col-md-12" id="t">
+                    <!-- Recomended item-->
+                    <input type="text" id="search" class="form-control " placeholder="Search" style="   width: 50%;margin: auto;margin-bottom:10px;border: #ffc107 1px solid;text-align: center;">
+
+                    {% for mus in m %}
+                    <div class="recom-item border" id="all">
+                        <div class="recom-media"><a href="{{ path('museum_shows', {'id': mus.idMuseum}) }}">
+                                <div class="pic" ><img style="height: 50vh;"src="{{"http:\\\\localhost\\"~mus.imageMuseum| slice(16) }}" ></div></a>
+                            <div class="location"><i class="flaticon-suntour-map"></i> {{ mus.paysMuseum }}</div>
+                        </div>
+                        <!-- Recomended Content-->
+                        <div class="recom-item-body"><a href="{{ path('museum_shows', {'id': mus.idMuseum}) }}">
+                                <h6 class="blog-title">{{ mus.nomMuseum }}</h6></a>
+                             {% for i in 1.. mus.rating %}
+                                <div class="stars stars"></div>
+                            {% endfor %} 
+                            <p class="mb-30"> {{ mus.description|raw }} </p><a href="{{ path('museum_shows', {'id':  mus.idMuseum}) }}" class="recom-button">Read more</a><a href="{{ path('museum_shows', {'id':  mus.idMuseum}) }}" class="cws-button small alt">Book now</a>
+                            <div class="action font-2">20%</div>
+                        </div>
+                        <!-- Recomended Image-->
+                    </div>
+                    {% endfor %}
+                    <div id="search">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- call out section-->
+  
+        <!-- ! call out section	-->
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+                var value = $(this).val();
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+                $.ajax({
+                    /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                    url : "{{ path('listeMuseums') }}",
+                    /* La méthode utilisée pour transférer les données est GET */
+                    type : 'GET',
+                    /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                    data: {
+                        'searchValue' : value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                    success : function(retour){
+                        if(retour){
+                            $('div#search').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                console.log(obj);
+                                $('#t div#all').hide();
+                                $('div#search').append('<div class="recom-item border"><div class="recom-media">' +
+                                    '<a href="/museums/'+obj.idMuseum+'"><div class="pic" ><img style="height: 50vh;" src="/upload/'+obj.imageMuseum+'" alt></div></a><div class="location"><i class="flaticon-suntour-map"></i>'+obj.paysMuseum+'</div></div> <div class="recom-item-body"><a href="/museums/'+obj.idMuseum+'"><h6 class="blog-title">'+obj.nomMuseum+'</h6></a><div class="stars stars-4"></div><p class="mb-30">'+obj.description+'</p><a href="/museum/listMuseums/'+obj.idMuseum+'"class="recom-button">Read more</a><a href="/museum/listMuseums/'+obj.idMuseum+'"class="cws-button small alt">Book now</a><div class="action font-2">20%</div></div>       </div></div>');
+                            });
+                        }
+                        else
+                        {
+                            $('#t div#all').show();
+                            $('div#search').empty();
+                            $('div#search').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

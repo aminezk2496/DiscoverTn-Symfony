@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+
+<div class="px-2">
+    <div class="">
+        <div class="form-group">
+            <label class="sr-only">Name</label>
+            {{ form_row(form.dateReservation)}}
+        </div>
+
+        {{ form_widget(form.confirmation, {'value' : 'valide'})}}
+
+        <button   class="btn" >{{ button_label|default('Save') }}</button>
+
+    </div>
+</div>
+
+
+<script>
+
+</script>
+
+
+
+
+
+
+
+{{ form_end(form) }}

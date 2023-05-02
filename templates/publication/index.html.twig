@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base-admin.html.twig' %}
+=======
+{% extends 'base.html.twig' %}
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 
 {% block title %}Publication index
 {% endblock %}
@@ -46,6 +50,10 @@
 											<td>{{ publication.datePublication ? publication.datePublication|date('Y-m-d') : '' }}</td>
 											<td>
 												<a href="{{ path('app_publication_show', {'id': publication.id}) }}">show</a>
+<<<<<<< HEAD
+=======
+												<a href="{{ path('app_publication_edit', {'id': publication.id}) }}">edit</a>
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 											</td>
 										</tr>
 
@@ -65,4 +73,8 @@
 	<!-- End #main -->
 
 
+<<<<<<< HEAD
+=======
+	<a href="{{ path('app_publication_new') }}">Create new</a>
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b
 {% endblock %}

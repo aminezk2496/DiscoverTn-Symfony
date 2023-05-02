@@ -118,4 +118,7 @@ class Publication
         return $this;
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 499f550c8212ca9c975321ea5343cdd29a3f940b

@@ -1,0 +1,35 @@
+{% extends 'base-front.html.twig' %}
+{% block body %}
+    <div class="main">
+
+        <div class="shop_top">
+            <div class="container">
+                {% for hotel in hotels %}
+                    <div class="col-md-3 shop_box"><a href="single.html">
+                            <img  src="{{ "http:\\\\localhost\\" ~ hotel.imageHotel | slice(16) }}" class="img-responsive" alt="">
+                            <span class="new-box">
+                        </a><div class="shop_desc"><a href="single.html">
+                            </a><h3><a href="single.html"></a><a href="#">{{ hotel.nomHotel }}</a></h3>
+                            <p>{{ hotel.adresseHotel }}</p>
+                            <span class="actual">{{ hotel.emailHotel  }}</span><br>
+                            <span class="actual">{{ hotel.telephoneHotel  }}</span><br>
+                            <span class="actual">{{ hotel.prixHotel  }}</span><br>
+                            <button id="ln" type="button" class="btn btn-primary"><a style="color: #fff" href="{{ path('deleteReservationHotClient',{'id':hotel.idHotel}) }}">Supprimer</a></button>
+                            <button id="ln" type="button" class="btn btn-primary"><a style="color: #fff" href="{{ path('checkoutHotel',{'id':hotel.idHotel}) }}">Pay</a></button>
+
+
+                        </div>
+
+                        </div>
+                {% endfor %}
+                    </div>
+
+            </div>
+        </div>
+    <style>
+        .img-responsive{
+            width: 100%!important;
+            height: 200px!important;
+        }
+    </style>
+{% endblock %}
