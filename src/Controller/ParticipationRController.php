@@ -10,6 +10,7 @@ use App\Form\RatingType;
 use App\Repository\ParticipationRepository;
 use App\Repository\RandonneeRepository;
 use App\Repository\RatingRepository;
+use App\Repository\FavoriteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +66,8 @@ class ParticipationRController extends AbstractController
 
         
     }
-    #[Route('/new', name: 'app_participation_r_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ParticipationRepository $participationRepository,RandonneeRepository $randonneeRepository): Response
+    #[Route('/new/{id}', name: 'app_participation_r_new', methods: ['GET', 'POST'])]
+    public function new($id,Request $request,FavoriteRepository $favoriteRepository, ParticipationRepository $participationRepository,RandonneeRepository $randonneeRepository): Response
     {
         $participation = new Participation();
         $randonnee = $randonneeRepository->find($id);
@@ -94,7 +95,7 @@ class ParticipationRController extends AbstractController
         
         
         $participationRepository->save($participation, true);
-        return $this->redirectToRoute('app_participation_r_index');
+        return $this->redirectToRoute('app_participation_index');
         
         /*return $this->renderForm('participation_r/new.html.twig', [
             'participation' => $participation,

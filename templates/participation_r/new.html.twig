@@ -46,7 +46,7 @@
                         {% endif %}
                         {% endfor %}
                         <a href="{{ path('app_Rating_ratera', {'id': result.randonnee.idRandonnee}) }}" class="btn btn-primary">Rate this Randonnee</a>
-                        <a href="{{ path('app_participation_new', {'id': result.randonnee.idRandonnee}) }}" class="btn btn-primary">Participer</a>
+                        <a href="{{ path('app_participation_r_new', {'id': result.randonnee.idRandonnee}) }}" class="btn btn-primary">Participer</a>
                         
                         <form action="{{ path('favorite_randonnee', {'id': result.randonnee.idRandonnee}) }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token('favorite_randonnee' ~ result.randonnee.idRandonnee) }}">
