@@ -100,7 +100,7 @@ class ParticipationController extends AbstractController
         if (!$camping) {
             throw $this->createNotFoundException('Le camping correspondant à cet ID n\'existe pas');
         }
-        $nombre = intval($participationRepository->count([]));
+        $nombre = intval($participationRepository->count([]));      
 // Appel de la méthode setDateParti() avec l'objet DateTime créé
         $participation->setDateParti($date);
         $participation->setNom($camping->getNom());
@@ -112,13 +112,13 @@ class ParticipationController extends AbstractController
         //$participation->setIdCamp($id);
         $participation->setIdCamp($camping);
         //$participation->setIdRand('');
-        $participation->setIdEvents(00);
-        $participation->setNombre(00);
+        // $participation->setIdEvents(00);
+        //$participation->setNombre(00);
         
         
         $participationRepository->save($participation, true);
         $places = $camping->getNbrPlace();
-         $newPlaces = $places - 1;
+        $newPlaces = $places - 1;
         $camping->setNbrPlace($newPlaces);
         $campingRepository->save($camping, true);
         //$campingController->calculerNbrPlace($id);

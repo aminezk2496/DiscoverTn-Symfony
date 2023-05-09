@@ -43,11 +43,6 @@ class Randonnee
     #[ORM\OneToMany(mappedBy: 'randonnee', targetEntity: Rating::class)]
     private Collection $ratings;
 
-    public function __construct()
-    {
-        $this->ratings = new ArrayCollection();
-    }
-
     public function getIdRandonnee(): ?int
     {
         return $this->idRandonnee;
@@ -148,6 +143,55 @@ class Randonnee
 
         return $this;
     }
+
+/**
+ * @ORM\ManyToMany(targetEntity="App\Entity\Participation", mappedBy="randonnee")
+ */
+private Collection $participations;
+
+
+#[ORM\OneToMany(mappedBy: 'randonnee', targetEntity: Favorite::class)]
+private Collection $favorites;
+ 
+
+public function __construct()
+{
+    $this->participations = new ArrayCollection();
+    $this->ratings = new ArrayCollection();
+    $this->favorites = new ArrayCollection();
+    
+}
+
+
+/**
+ * @return Collection<int, Participation>
+ */
+public function getParticipations(): Collection
+{
+    return $this->participations;
+}
+
+public function addParticipation(Participation $participation): self
+{
+    if (!$this->participations->contains($participation)) {
+        $this->participations->add($participation);
+        $rating->setRandonnee($this);
+    }
+
+    return $this;
+}
+
+public function removeParticipation(Participation $participation): self
+{
+    if ($this->participations->removeElement($participation)) {
+        // set the owning side to null (unless already changed)
+        if ($participation->getRandonnee() === $this) {
+            $participation->setRandonnee(null);
+        }
+    }
+
+    return $this;
+}
 
     /**
      * @return Collection<int, Rating>

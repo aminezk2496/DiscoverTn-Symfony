@@ -35,9 +35,12 @@
                 <td>{{ participation.dateParti ? participation.dateParti|date('Y-m-d') : '' }}</td>
                 <td>{{ participation.nom }}</td>
                 <td>
-                    <a href="{{ path('app_participation_show', {'idParti': participation.idParti}) }}">show</a>
+                    
                     {%if  participation.etat == 'En Attend'%}
                     <a href="{{ path('app_pdf_generator', {'id': participation.idParti}) }}">Confirme</a>
+                    <a href="{{ path('app_participation_show', {'idParti': participation.idParti}) }}">show</a>
+                    {%else%}
+                    <a href="{{ path('app_qr_codes', {'id': participation.idParti}) }}">show</a>
                     {%endif%}
                 </td>
             </tr>

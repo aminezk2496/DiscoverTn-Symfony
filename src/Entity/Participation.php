@@ -43,7 +43,8 @@ class Participation
      *
      * @ORM\ManyToOne(targetEntity="Randonnee")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_rand", referencedColumnName="id_randonnee")
+     *   @ORM\JoinColumn(name="id_rand", referencedColumnName="id_randonnee"),
+     *  foreignKey=@ORM\ForeignKey(name="fk_participation_randonnee"))
      * })
      */
     #[ORM\ManyToOne(targetEntity:"Randonnee")]

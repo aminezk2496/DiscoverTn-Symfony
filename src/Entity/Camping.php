@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CampingRepository;
 use Datetime;
+//use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampingRepository::class)]
 
@@ -17,45 +18,56 @@ class Camping
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column (name:"id_Camping")]
+   // #[Groups("campings")]
     private ?int $idCamping = null;
 
    
     #[ORM\Column(length:1000)]
+   // #[Groups("campings")]
     private ?string $nom = null;
 
    
     #[ORM\Column]
+    //#[Groups("campings")]
     private ?\DateTime $dateDebut = null;
 
   
     #[ORM\Column]
+    //#[Groups("campings")]
     private ?\DateTime $dateFin = null;
 
    
     #[ORM\Column (type:"integer")]
+    //#[Groups("campings")]
     private ?int $periode = null;
 
     
     #[ORM\Column (type:"float")]
+    //#[Groups("campings")]
     private ?float $prix = null;
 
    
     #[ORM\Column(length:100)]
+   // #[Groups("campings")]
     private ?string $lieux = null;
 
     #[ORM\Column(type: Types::TEXT)]
+  //  #[Groups("campings")]
     private ?string $description = null;
 
     
     #[ORM\Column(length:255)]
+   // #[Groups("campings")]
     private $imagec = 'NULL';
 
    
-    #[ORM\Column]
+    #[ORM\Column (name:"Nbr_PlaceC")]
+   // #[Groups("campings")]
     private ?int $nbr_place = null;
 
     
     #[ORM\Column]
+   // #[Groups("campings")]
     private $image = 'NULL';
 
     public function getIdCamping(): ?int
@@ -223,10 +235,10 @@ public function addParticipation(Participation $participation): self
 
 public function removeParticipation(Participation $participation): self
 {
-    if ($this->ratings->removeElement($participation)) {
+    if ($this->participations->removeElement($participation)) {
         // set the owning side to null (unless already changed)
-        if ($rating->getCamping() === $this) {
-            $rating->setCamping(null);
+        if ($participation->getCamping() === $this) {
+            $participation->setCamping(null);
         }
     }
 

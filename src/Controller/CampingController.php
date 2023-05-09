@@ -14,16 +14,24 @@ use App\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormError;
 use App\Repository\FavoriteRepository;
+//use Symfony\Componet\Serializer\Normalizer\NormalizerInterface;
+//use Symfony\Componet\Serializer\SerializerInterface;
 
 #[Route('/camping')]
 class CampingController extends AbstractController
 {
+    
+
     #[Route('/', name: 'app_camping_index', methods: ['GET'])]
     public function index(CampingRepository $campingRepository): Response
     {
         return $this->render('camping/index.html.twig', [
             'campings' => $campingRepository->findAll(),
         ]);
+       // $campings = $campingRepository->findAll();
+       // $campingNormalized = $normalizer->normalize($campings, null, ['groups'=> "campings"]);
+       // $json = json_encode($campingNormalized);
+       // return new Response($json);
     }
 
     #[Route('/new', name: 'app_camping_new', methods: ['GET', 'POST'])]
@@ -37,7 +45,8 @@ class CampingController extends AbstractController
            $startDate = $form->get('dateDebut')->getData();
         $endDate = $form->get('dateFin')->getData();
         
-        if ($endDate < $startDate) {
+        if ($endDate < $startDate) 
+        {
             $this->addFlash('error', 'La date de fin doit être supérieure ou égale à la date de début.');
             $form->addError(new FormError('La date de fin doit être supérieure ou égale à la date de début.'));
     
@@ -45,17 +54,21 @@ class CampingController extends AbstractController
             return $this->render('camping/new.html.twig', [
                 'form' => $form->createView(),
             ]);
-}
+        }
 
             $file = $form->get('imagec')->getData();
+            //var_dump($file);
             $fileName = $file->getClientOriginalName();
             $path = '/Camp/' . $fileName;
-        $file->move($this->getParameter('images_directory'), $fileName);
-        //$file->move($this->getParameter('uploads_directory'), $fileName);
+            $file->move($this->getParameter('images_directory'), $fileName);
+            //$file->move($this->getParameter('uploads_directory'), $fileName);       
+            $fullpath = str_replace('\\', '/', 'file:/' . 'C:/xampp/htdocs/devcomimgupload' . $path );
+            $camping->setImage($fullpath);
 
-        $camping->setImagec($path);
+             $camping->setImagec($path);
             $campingRepository->save($camping, true);
-
+            //$jsonContent = $normalizer->normalize($camping, 'json', ['groups'=>'Campings']);
+            //return new Response(json_encode($jsonContent));
             return $this->redirectToRoute('app_camping_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,10 +96,10 @@ class CampingController extends AbstractController
             $file = $form->get('imagec')->getData();
             $fileName = $file->getClientOriginalName();
             $path = '/Camp/' . $fileName;
-        $file->move($this->getParameter('images_directory'), $fileName);
-        //$file->move($this->getParameter('uploads_directory'), $fileName);
+            $file->move($this->getParameter('images_directory'), $fileName);
+            //$file->move($this->getParameter('uploads_directory'), $fileName);
 
-        $camping->setImagec($path);
+            $camping->setImagec($path);
             $campingRepository->save($camping, true);
 
             return $this->redirectToRoute('app_camping_index', [], Response::HTTP_SEE_OTHER);
@@ -119,7 +132,7 @@ class CampingController extends AbstractController
     $existingFavorite = $favoritesRepository->findOneBy(['user' => $userId, 'camping' => $camping]);
     $date = new \DateTime();
     if (!$existingFavorite) {
-        // Create a new favorites entity for the user and article
+
         $favorites = new Favorite();
         $favorites->setUser($userId);
         $favorites->setCamping($camping);
